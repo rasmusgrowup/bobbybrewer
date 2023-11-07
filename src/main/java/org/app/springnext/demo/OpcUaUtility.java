@@ -8,7 +8,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 
 import java.util.concurrent.ExecutionException;
 
-
 public class OpcUaUtility {
 
     public static void writeValue(OpcUaClient client, NodeId nodeId, Variant value)

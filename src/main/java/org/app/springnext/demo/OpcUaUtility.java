@@ -5,6 +5,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.StatusCode;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
+import org.eclipse.milo.opcua.stack.core.types.enumerated.TimestampsToReturn;
 
 import java.util.concurrent.ExecutionException;
 
@@ -23,6 +24,14 @@ public class OpcUaUtility {
         } else {
             System.out.println("Write failed with status: " + statusCode);
         }
+    }
+    public static void readValue(OpcUaClient client, NodeId nodeId) throws InterruptedException, ExecutionException {
+        DataValue value = client.readValue(
+                0,                     // max age
+                TimestampsToReturn.Both,
+                nodeId).get();
+
+        System.out.println("Read value: " + value.getValue());
     }
 }
 

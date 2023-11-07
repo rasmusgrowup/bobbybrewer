@@ -18,7 +18,7 @@ public class OPCController {
         Map<String, String> responseData = new HashMap<>();
         try {
             OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
-            NodeId readStatus = new NodeId(6, "::Program:Cube.Command.StateCurrent");
+            NodeId readStatus = new NodeId(6, "::Program:Cube.Status.StateCurrent");
             responseData.put("data", OpcUaUtility.readValue(opcClient, readStatus));
             return responseData;
         } catch (Exception e) {
@@ -27,7 +27,7 @@ public class OPCController {
         }
     }
 
-    @PostMapping("/write-data")
+   /* @PostMapping("/write-data")
     public String writeData(@RequestBody String data) {
         try {
             OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
@@ -45,7 +45,7 @@ public class OPCController {
         }
         return "Data written to OPC device";
     }
-
+*/
     @GetMapping("/status")
     public String getStatus() {
         // Logic to get the status of the OPC device

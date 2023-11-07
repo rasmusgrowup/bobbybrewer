@@ -30,7 +30,7 @@ public class Write {
         }
     }
 
-    private static void writeValue(OpcUaClient client, NodeId nodeId, Variant value)
+    static void writeValue(OpcUaClient client, NodeId nodeId, Variant value)
             throws InterruptedException, ExecutionException {
 
         // Create DataValue. A DataValue object wraps a Variant and allows you to specify StatusCode and timestamps.

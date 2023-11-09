@@ -1,12 +1,17 @@
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import {Button} from "@mui/material";
+import {Button, Grid, Container, FormControl, FormControlLabel, Input, InputLabel, Radio, RadioGroup, Slider} from "@mui/material";
+import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
 import {useEffect, useState} from "react";
+import { useSlider } from '@mui/base/useSlider';
 
 const Home: NextPage = () => {
     const [data, setData] = useState<string | null>(null);
     const [isLoading, setLoading] = useState<boolean>(false)
+    const [amount, setAmount] = useState(100);
+    const [speed, setSpeed] = useState(30);
+    const [beerType, setBeerType] = useState(0);
 
     useEffect(() => {
         setLoading(true);
@@ -26,8 +31,11 @@ const Home: NextPage = () => {
                 console.error('An error occurred:', error);
             });
     }, []);
+    console.log("amount: " + amount);
+    console.log("slider value: " + speed);
+    console.log("Beer type: " + beerType);
 
-    const handleSetBeerType = async (beerType: number) => {
+    const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
         try {
             const response = await fetch('/api/set-beer-type', {
@@ -35,7 +43,11 @@ const Home: NextPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({beerType}), // Send the integer value (1 in this case)
+                body: JSON.stringify({
+                    "beerType": beerType,
+                    "amount": amount,
+                    "speed": speed
+                }), // Send the integer value (1 in this case)
             });
 
             if (response.ok) {
@@ -54,10 +66,6 @@ const Home: NextPage = () => {
         try {
             const response = await fetch('/api/startMaintenance', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({}),
             });
             if (response.ok) {
                 console.log("Maintenance has started successfully")
@@ -79,15 +87,42 @@ const Home: NextPage = () => {
 
             <main className={styles.main}>
                 <h1>Waesome webpage</h1>
-                <div>Status of the machine: {data}</div>
-                <div className={styles.buttons}>
-                    <header>Choose a type of beer</header>
-                    <Button variant="outlined" onClick={() => handleSetBeerType(0)}>Pilsner</Button>
-                    <Button variant="outlined" onClick={() => handleSetBeerType(1)}>Wheat</Button>
-                    <Button variant="outlined" onClick={() => handleSetBeerType(2)}>IPA</Button>
-                    <Button variant="outlined" onClick={() => handleSetBeerType(3)}>Stout</Button>
-                    <Button variant="outlined" onClick={() => handleSetBeerType(4)}>Ale</Button>
-                    <Button variant="outlined" onClick={() => handleSetBeerType(5)}>Alcohol-free</Button>
+                {/* <div>Status of the machine: {data}</div> */}
+                <div className={styles.form}>
+                    <div className={styles.column}>
+                        <label>Choose a beer type</label>
+                        <RadioGroup onChange={(event, val:any) => setBeerType(val)} value={beerType} aria-labelledby="demo-radio-buttons-group-label" defaultValue="pilsner" name="radio-buttons-group">
+                            <FormControlLabel value="0" control={<Radio />} label="Pilsner"/>
+                            <FormControlLabel value="1" control={<Radio />} label="Wheat" />
+                            <FormControlLabel value="2" control={<Radio />} label="IPA" />
+                            <FormControlLabel value="3" control={<Radio />} label="Stout" />
+                            <FormControlLabel value="4" control={<Radio />} label="Ale" />
+                            <FormControlLabel value="5" control={<Radio />} label="Alcohol-free" />
+                        </RadioGroup>
+                    </div>
+                    <div className={styles.column}>
+                        <label>Choose amount</label>
+                        <NumberInput
+                            aria-label="Amount of beer"
+                            placeholder="Choose amount of beer"
+                            value={amount}
+                            onChange={(event, val:any) => setAmount(val)}
+                            step={100}
+                        />
+                        <label className={styles.speedLabel}>Choose production speed: {speed}</label>
+                        <Slider
+                            //style={{ marginTop: '2.5rem'}}
+                            aria-label="speed"
+                            defaultValue={30}
+                            step={10}
+                            marks
+                            min={0}
+                            max={100}
+                            onChange={(_, newValue: any) => setSpeed(newValue)}
+                            //valueLabelDisplay="on"
+                        />
+                        <Button className={styles.formButton} type="submit" variant={"contained"} onClick={() => handleStartProduction()}>Start</Button>
+                    </div>
                 </div>
                 <div className={styles.buttons}>
                     <Button variant="outlined" onClick={() => startMaintenance()}>Start Maintenance</Button>

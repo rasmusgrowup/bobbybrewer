@@ -14,3 +14,140 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.MuiNumberInput-input {
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.5;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  color: rgb(28, 32, 37);
+  background-image: inherit;
+  background-position-x: inherit;
+  background-position-y: inherit;
+  background-size: inherit;
+  background-repeat: inherit;
+  background-attachment: inherit;
+  background-origin: inherit;
+  background-clip: inherit;
+  background-color: inherit;
+  border-top-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+  border-left-style: none;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+  padding: 8px 12px;
+  outline-width: 0px;
+}
+
+.MuiNumberInput-root {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 400;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  color: rgb(28, 32, 37);
+  background-color: rgb(255, 255, 255);
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: rgb(218, 226, 237);
+  border-right-color: rgb(218, 226, 237);
+  border-bottom-color: rgb(218, 226, 237);
+  border-left-color: rgb(218, 226, 237);
+  box-shadow: rgb(243, 246, 249) 0px 2px 2px;
+  display: grid;
+  grid-template-columns: 1fr 19px;
+  grid-template-rows: 1fr 1fr;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  column-gap: 8px;
+  padding: 6px;
+}
+
+.MuiNumberInput-decrementButton,
+.MuiNumberInput-incrementButton {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  appearance: none;
+  padding-top: 0px;
+  width: 19px;
+  height: 19px;
+  font-family: system-ui, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  color: rgb(28, 32, 37);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 120ms;
+}
+
+.MuiNumberInput-decrementButton {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-color: rgb(218, 226, 237);
+  background-color: rgb(243, 246, 249);
+  color: rgb(28, 32, 37);
+}
+
+.MuiNumberInput-incrementButton {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-left-style: solid;
+  border-bottom-width: 0px;
+  border-top-color: rgb(218, 226, 237);
+  background-color: rgb(243, 246, 249);
+  color: rgb(28, 32, 37);
+}
+
+.MuiNumberInput-incrementButton:after {
+  content: '+'
+}
+
+.MuiNumberInput-decrementButton:after {
+  content: '-'
+}

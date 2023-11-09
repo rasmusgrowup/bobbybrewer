@@ -10,7 +10,7 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch('/api/read-data')
+        fetch('/api/read-current-state')
             .then(res => {
                 if (!res.ok) {
                     throw new Error("Network response was not ok");

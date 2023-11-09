@@ -90,9 +90,7 @@ const Home: NextPage = () => {
                     <Button variant="outlined" onClick={() => handleSetBeerType(5)}>Alcohol-free</Button>
                 </div>
                 <div className={styles.buttons}>
-                    <button onClick={() => startMaintenance()}>
-                        Start Maintenance
-                    </button>
+                    <Button variant="outlined" onClick={() => startMaintenance()}>Start Maintenance</Button>
                 </div>
             </main>
         </div>

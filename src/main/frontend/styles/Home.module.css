@@ -114,3 +114,7 @@
     flex-direction: column;
   }
 }
+
+.buttons header {
+  margin-bottom: 1rem;
+}

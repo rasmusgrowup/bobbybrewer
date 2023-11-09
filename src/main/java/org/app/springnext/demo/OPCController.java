@@ -1,5 +1,6 @@
 package org.app.springnext.demo;
 
+import lombok.extern.java.Log;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -67,5 +70,11 @@ public class OPCController implements IOPCController {
     @Override
     public void cancelProduction() {
 
+    }
+    @GetMapping("/read-sensor-temp")
+    public Map<String, String> readTemp() throws Exception {
+        Map<String, String> responseData = new HashMap<>();
+        responseData.put("data", Sensors.readTemp());
+        return responseData;
     }
 }

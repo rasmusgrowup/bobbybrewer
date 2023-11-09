@@ -4,6 +4,8 @@ import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 
+import java.util.Map;
+
 public class CommandController {
 
     public void cancelProduction() {
@@ -39,6 +41,17 @@ public class CommandController {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setBeerType(Map<String, Integer> requestBody) {
+        try {
+            Integer beerType = requestBody.get("beerType");
+            OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
+            NodeId beerTypeNode = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
+            OpcUaUtility.writeValue(opcClient, beerTypeNode, new Variant((float) beerType));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

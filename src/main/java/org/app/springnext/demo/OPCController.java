@@ -30,24 +30,14 @@ public class OPCController implements IOPCController {
     @Override
     @PostMapping("/set-beer-type")
     public void setBeerType(@RequestBody Map<String, Integer> requestBody) {
-        try {
-            Integer beerType = requestBody.get("beerType");
-            OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
-            NodeId beerTypeNode = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
-            OpcUaUtility.writeValue(opcClient, beerTypeNode, new Variant((float) beerType));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        CommandController commandController = new CommandController();
+        commandController.setBeerType(requestBody);
     }
 
     @PostMapping("/startMaintenance")
     public void startMaintenance() {
-        try {
-            CommandController machine = new CommandController();
-            machine.startMaintenance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        CommandController commandController = new CommandController();
+        commandController.startMaintenance();
     }
 
     @Override

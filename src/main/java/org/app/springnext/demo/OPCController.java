@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -37,18 +38,30 @@ public class OPCController {
             NodeId batchId = new NodeId(6, "::Program:Cube.Command.Parameter[0]");
             NodeId beerType = new NodeId(6, "::Program:Cube.Command.Parameter[1]");
             NodeId amount = new NodeId(6, "::Program:Cube.Command.Parameter[2]");
-            OpcUaUtility.writeValue(opcClient, speed, new Variant(100));
-            OpcUaUtility.writeValue(opcClient, batchId, new Variant(69));
-            OpcUaUtility.writeValue(opcClient, beerType, new Variant(1));
-            OpcUaUtility.writeValue(opcClient, amount, new Variant(1000));
-            OpcUaUtility.writeValue(opcClient, controlCmd, new Variant(1));
-            OpcUaUtility.writeValue(opcClient, changeReq, new Variant(true));
+            OpcUaUtility.writeValue(opcClient, speed, new Variant(100.0f));
+            OpcUaUtility.writeValue(opcClient, batchId, new Variant(69.0f));
+            OpcUaUtility.writeValue(opcClient, beerType, new Variant(1.0f));
+            OpcUaUtility.writeValue(opcClient, amount, new Variant(1000.0f));
+            //OpcUaUtility.writeValue(opcClient, controlCmd, new Variant(1));
+            //OpcUaUtility.writeValue(opcClient, changeReq, new Variant(true));
             OpcUaUtility.writeValue(opcClient, controlCmd, new Variant(2));
             OpcUaUtility.writeValue(opcClient, changeReq, new Variant(true));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return "Data written to OPC device";
+    }
+
+    @PostMapping("/set-beer-type")
+    public void setBeerType(@RequestBody Map<String, Integer> requestBody) {
+        try {
+            Integer beerType = requestBody.get("beerType");
+            OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
+            NodeId beerTypeNode = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
+            OpcUaUtility.writeValue(opcClient, beerTypeNode, new Variant(beerType));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/status")

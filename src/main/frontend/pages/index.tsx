@@ -27,16 +27,27 @@ const Home: NextPage = () => {
             });
     }, []);
 
-    const brewABeer = (commands: any) => {
+    const handleSetBeerType = async (beerType: number) => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
-        fetch('/api/write-data', {
-            method: 'POST',
-            body: JSON.stringify({ messages: ['id', 'amount'], commands: commands }),
-            headers: {
-                'Content-Type': 'application/json'
+        try {
+            const response = await fetch('/api/set-beer-type', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({beerType}), // Send the integer value (1 in this case)
+            });
+
+            if (response.ok) {
+                // Handle success, if needed
+                console.log("Function called with beerType: " + beerType)
+            } else {
+                // Handle errors
+                console.error('Failed to set beer type');
             }
-        });
-        console.log("brewABeer called")
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -52,12 +63,12 @@ const Home: NextPage = () => {
                 <div>Status of the machine: {data}</div>
                 <div className={styles.buttons}>
                     <header>Choose a type of beer</header>
-                    <Button variant="outlined" onClick={() => brewABeer([0, 1000])}>Pilsner</Button>
-                    <Button variant="outlined" onClick={() => brewABeer([1, 1000])}>Wheat</Button>
-                    <Button variant="outlined" onClick={() => brewABeer([2, 1000])}>IPA</Button>
-                    <Button variant="outlined" onClick={() => brewABeer([3, 1000])}>Stout</Button>
-                    <Button variant="outlined" onClick={() => brewABeer([4, 1000])}>Ale</Button>
-                    <Button variant="outlined" onClick={() => brewABeer([5, 1000])}>Alcohol-free</Button>
+                    <Button variant="outlined" onClick={() => handleSetBeerType(0)}>Pilsner</Button>
+                    <Button variant="outlined" onClick={() => handleSetBeerType(1)}>Wheat</Button>
+                    <Button variant="outlined" onClick={() => handleSetBeerType(2)}>IPA</Button>
+                    <Button variant="outlined" onClick={() => handleSetBeerType(3)}>Stout</Button>
+                    <Button variant="outlined" onClick={() => handleSetBeerType(4)}>Ale</Button>
+                    <Button variant="outlined" onClick={() => handleSetBeerType(5)}>Alcohol-free</Button>
                 </div>
             </main>
         </div>

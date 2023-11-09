@@ -24,13 +24,14 @@ public class OpcUaUtility {
             System.out.println("Write failed with status: " + statusCode);
         }
     }
-    public static void readValue(OpcUaClient client, NodeId nodeId) throws InterruptedException, ExecutionException {
+    public static String readValue(OpcUaClient client, NodeId nodeId) throws InterruptedException, ExecutionException {
         DataValue value = client.readValue(
                 0,                     // max age
                 TimestampsToReturn.Both,
                 nodeId).get();
 
         System.out.println("Read value: " + value.getValue());
+        return null;
     }
 }
 

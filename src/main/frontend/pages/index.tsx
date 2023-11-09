@@ -50,6 +50,25 @@ const Home: NextPage = () => {
         }
     };
 
+    const startMaintenance = async () => {
+        try {
+            const response = await fetch('/api/startMaintenance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            });
+            if (response.ok) {
+                console.log("Maintenance has started successfully")
+            } else {
+                console.error('Failed to start maintenance');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -69,6 +88,11 @@ const Home: NextPage = () => {
                     <Button variant="outlined" onClick={() => handleSetBeerType(3)}>Stout</Button>
                     <Button variant="outlined" onClick={() => handleSetBeerType(4)}>Ale</Button>
                     <Button variant="outlined" onClick={() => handleSetBeerType(5)}>Alcohol-free</Button>
+                </div>
+                <div className={styles.buttons}>
+                    <button onClick={() => startMaintenance()}>
+                        Start Maintenance
+                    </button>
                 </div>
             </main>
         </div>

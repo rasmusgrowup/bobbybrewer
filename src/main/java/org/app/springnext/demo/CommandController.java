@@ -30,7 +30,7 @@ public class CommandController {
             NodeId nodeCntrlCmd = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
             NodeId nodeCmdChangeRequest = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
 
-            int[] cntrlCmds = {4, 2, 3, 1}; // 4: Abort (DI6), 2: Start (DI4), 3: Stop (DI5), 1: Reset (DI3). De fire cmds udfører maintenance
+            int[] cntrlCmds = {3, 1, 2, 4}; // 4: Abort (DI6), 2: Start (DI4), 3: Stop (DI5), 1: Reset (DI3). De fire cmds udfører maintenance
             long millisecondsDelay = 5000; // Pause mellem commands så maskinen kan nå at respondere
 
             for (int cntrlCmd : cntrlCmds) {

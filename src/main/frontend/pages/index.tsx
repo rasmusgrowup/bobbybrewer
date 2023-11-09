@@ -36,6 +36,7 @@ const Home: NextPage = () => {
                 'Content-Type': 'application/json'
             }
         });
+        console.log("brewABeer called")
     };
 
     return (

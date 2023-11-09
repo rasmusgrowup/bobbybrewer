@@ -35,9 +35,9 @@ public class OPCController {
             NodeId speed = new NodeId(6, "::Program:Cube.Command.MachSpeed");
             NodeId controlCmd = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
             NodeId changeReq = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
-            NodeId batchId = new NodeId(6, "::Program:Cube.Command.Parameter[0]");
-            NodeId beerType = new NodeId(6, "::Program:Cube.Command.Parameter[1]");
-            NodeId amount = new NodeId(6, "::Program:Cube.Command.Parameter[2]");
+            NodeId batchId = new NodeId(6, "::Program:Cube.Command.Parameter[0].Value");
+            NodeId beerType = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
+            NodeId amount = new NodeId(6, "::Program:Cube.Command.Parameter[2].Value");
             OpcUaUtility.writeValue(opcClient, speed, new Variant(100.0f));
             OpcUaUtility.writeValue(opcClient, batchId, new Variant(69.0f));
             OpcUaUtility.writeValue(opcClient, beerType, new Variant(1.0f));
@@ -58,7 +58,7 @@ public class OPCController {
             Integer beerType = requestBody.get("beerType");
             OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
             NodeId beerTypeNode = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
-            OpcUaUtility.writeValue(opcClient, beerTypeNode, new Variant(beerType));
+            OpcUaUtility.writeValue(opcClient, beerTypeNode, new Variant((float) beerType));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

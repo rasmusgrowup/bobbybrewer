@@ -44,6 +44,7 @@ public class OPCController {
             OpcUaUtility.writeValue(opcClient, amount, new Variant(1000.0f));
             //OpcUaUtility.writeValue(opcClient, controlCmd, new Variant(1));
             //OpcUaUtility.writeValue(opcClient, changeReq, new Variant(true));
+            
             OpcUaUtility.writeValue(opcClient, controlCmd, new Variant(2));
             OpcUaUtility.writeValue(opcClient, changeReq, new Variant(true));
         } catch (Exception e) {

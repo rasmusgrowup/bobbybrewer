@@ -24,7 +24,6 @@ public class OPCController implements IOPCController {
         } catch (Exception e) {
             responseData.put("error", "Failed to read data.");
             return responseData;
-
         }
     }
 

@@ -3,12 +3,10 @@ package org.app.springnext.demo;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -44,7 +42,7 @@ public class OPCController {
             OpcUaUtility.writeValue(opcClient, amount, new Variant(1000.0f));
             //OpcUaUtility.writeValue(opcClient, controlCmd, new Variant(1));
             //OpcUaUtility.writeValue(opcClient, changeReq, new Variant(true));
-            
+
             OpcUaUtility.writeValue(opcClient, controlCmd, new Variant(2));
             OpcUaUtility.writeValue(opcClient, changeReq, new Variant(true));
         } catch (Exception e) {

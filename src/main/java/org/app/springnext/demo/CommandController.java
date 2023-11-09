@@ -4,7 +4,7 @@ import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 
-public class Machine {
+public class CommandController {
 
     public void cancelProduction() {
         try {

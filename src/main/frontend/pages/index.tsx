@@ -5,6 +5,7 @@ import {Button, Grid, Container, FormControl, FormControlLabel, Input, InputLabe
 import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
 import {useEffect, useState} from "react";
 import { useSlider } from '@mui/base/useSlider';
+import StatusContainer from "../components/StatusContainer";
 
 const Home: NextPage = () => {
     const [data, setData] = useState<string | null>(null);
@@ -13,12 +14,12 @@ const Home: NextPage = () => {
     const [speed, setSpeed] = useState(30);
     const [beerType, setBeerType] = useState(0);
 
-    useEffect(() => {
+    /* useEffect(() => {
         setLoading(true);
         const fetchData = () => { fetch('/api/read-current-state')
             .then(res => {
                 if (!res.ok) {
-                    throw new Error("Network response was not ok");
+                    throw new Error("An error happened");
                 }
                 return res.json();
             })
@@ -27,22 +28,22 @@ const Home: NextPage = () => {
                 setLoading(false);
             })
             .catch(error => {
-                setData(error.toString());
-                console.error('An error occurred:', error);
+                setData("Network offline");
             });
-    };
+        };
         // Call the function once immediately, then set the interval
         fetchData();
         const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
 
         // Cleanup function to clear the interval when the component unmounts
         return () => clearInterval(intervalId);
-    }, []);
+    }, []); */
 
 
     console.log("amount: " + amount);
     console.log("slider value: " + speed);
     console.log("Beer type: " + beerType);
+    console.log(data)
 
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
@@ -100,7 +101,7 @@ const Home: NextPage = () => {
                     <h1>BobbyBrewer - Beer Brewing Machine</h1>
                     <img className={styles.beerLogo} src="/indexlogo.png" alt="beer" />
                 </div>
-                <div>Status of the machine: {data}</div>
+                <StatusContainer />
                 <h2>Production Settings</h2>
                 <div className={styles.form}>
                     <div className={styles.column}>

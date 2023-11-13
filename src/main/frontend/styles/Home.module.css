@@ -1,13 +1,12 @@
 .container {
   padding: 0 2rem;
   background-color: rgb(13, 7, 38);
-  -webkit-backdrop-filter: blur(33px);
   color: #93D0FF;
 }
 
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
+  padding: 2rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -155,8 +154,6 @@
 .headerContainer {
   display: flex;
   align-items: center;
-  top: 15px;
-  position: absolute;
 }
 
 .formActions .buttons {

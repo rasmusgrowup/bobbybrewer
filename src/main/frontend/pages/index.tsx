@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch('/api/read-current-state')
+        const fetchData = () => { fetch('/api/read-current-state')
             .then(res => {
                 if (!res.ok) {
                     throw new Error("Network response was not ok");
@@ -30,7 +30,16 @@ const Home: NextPage = () => {
                 setData(error.toString());
                 console.error('An error occurred:', error);
             });
+    };
+        // Call the function once immediately, then set the interval
+        fetchData();
+        const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
+
+        // Cleanup function to clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
     }, []);
+
+
     console.log("amount: " + amount);
     console.log("slider value: " + speed);
     console.log("Beer type: " + beerType);
@@ -38,7 +47,7 @@ const Home: NextPage = () => {
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
         try {
-            const response = await fetch('/api/set-beer-type', {
+            const response = await fetch('/api/start_production', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +84,7 @@ const Home: NextPage = () => {
         } catch (error) {
             console.error('Error:', error);
         }
-    }
+    };
 
     return (
         <div className={styles.container}>
@@ -87,7 +96,7 @@ const Home: NextPage = () => {
 
             <main className={styles.main}>
                 <h1>Waesome webpage</h1>
-                {/* <div>Status of the machine: {data}</div> */}
+                 <div>Status of the machine: {data}</div>
                 <div className={styles.form}>
                     <div className={styles.column}>
                         <label>Choose a beer type</label>
@@ -111,7 +120,6 @@ const Home: NextPage = () => {
                         />
                         <label className={styles.speedLabel}>Choose production speed: {speed}</label>
                         <Slider
-                            //style={{ marginTop: '2.5rem'}}
                             aria-label="speed"
                             defaultValue={30}
                             step={10}
@@ -119,7 +127,6 @@ const Home: NextPage = () => {
                             min={0}
                             max={100}
                             onChange={(_, newValue: any) => setSpeed(newValue)}
-                            //valueLabelDisplay="on"
                         />
                         <Button className={styles.formButton} type="submit" variant={"contained"} onClick={() => handleStartProduction()}>Start</Button>
                     </div>

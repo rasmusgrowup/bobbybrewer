@@ -5,7 +5,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -17,7 +16,7 @@ public class OPCController implements IOPCController {
         Map<String, String> responseData = new HashMap<>();
         try {
             OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
-            NodeId readStatus = new NodeId(6, "::Program:Cube.Status.StateCurrent");
+            NodeId readStatus = new NodeId(6, "::Program:Cube.Admin.ProdProcessedCount");
             responseData.put("data", OpcUaUtility.readValue(opcClient, readStatus));
             return responseData;
         } catch (Exception e) {

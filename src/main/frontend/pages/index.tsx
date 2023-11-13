@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch('/api/read-current-state')
+        const fetchData = () => { fetch('/api/read-current-state')
             .then(res => {
                 if (!res.ok) {
                     throw new Error("Network response was not ok");
@@ -30,7 +30,15 @@ const Home: NextPage = () => {
                 setData(error.toString());
                 console.error('An error occurred:', error);
             });
+    };
+        // Call the function once immediately, then set the interval
+        fetchData();
+        const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
+
+        // Cleanup function to clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
     }, []);
+
 
     console.log("amount: " + amount);
     console.log("slider value: " + speed);
@@ -88,7 +96,7 @@ const Home: NextPage = () => {
 
             <main className={styles.main}>
                 <h1>Waesome webpage</h1>
-                {/* <div>Status of the machine: {data}</div> */}
+                 <div>Status of the machine: {data}</div>
                 <div className={styles.form}>
                     <div className={styles.column}>
                         <label>Choose a beer type</label>

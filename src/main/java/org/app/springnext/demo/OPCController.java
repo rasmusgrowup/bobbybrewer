@@ -51,12 +51,13 @@ public class OPCController implements IOPCController {
     @Override
     @PostMapping("/start_production")
     public void startProduction(@RequestBody Map<String, Integer> requestBody) throws Exception {
+        boolean is_reset = false;
         CommandController commandController = new CommandController();
         commandController.resetCommand();
-        while (!OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")).equals("4")){
-            System.out.println("Not reset yet, joo");
+        while (!is_reset){
+            is_reset = OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")).equals("4");
+            System.out.println(OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")));
         }
-        //TimeUnit.SECONDS.sleep(3);
         commandController.setBeerType(requestBody);
         commandController.setAmount(requestBody);
         commandController.setSpeed(requestBody);

@@ -31,6 +31,7 @@ const Home: NextPage = () => {
                 console.error('An error occurred:', error);
             });
     }, []);
+
     console.log("amount: " + amount);
     console.log("slider value: " + speed);
     console.log("Beer type: " + beerType);
@@ -75,7 +76,7 @@ const Home: NextPage = () => {
         } catch (error) {
             console.error('Error:', error);
         }
-    }
+    };
 
     return (
         <div className={styles.container}>
@@ -111,7 +112,6 @@ const Home: NextPage = () => {
                         />
                         <label className={styles.speedLabel}>Choose production speed: {speed}</label>
                         <Slider
-                            //style={{ marginTop: '2.5rem'}}
                             aria-label="speed"
                             defaultValue={30}
                             step={10}
@@ -119,7 +119,6 @@ const Home: NextPage = () => {
                             min={0}
                             max={100}
                             onChange={(_, newValue: any) => setSpeed(newValue)}
-                            //valueLabelDisplay="on"
                         />
                         <Button className={styles.formButton} type="submit" variant={"contained"} onClick={() => handleStartProduction()}>Start</Button>
                     </div>

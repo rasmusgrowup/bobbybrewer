@@ -8,6 +8,38 @@ import java.util.Map;
 
 public class CommandController {
 
+
+    public void startProduction() {
+        try {
+            OpcUaClient client = OpcUaClientSingleton.getInstance();
+
+            NodeId nodeCntrlCmd = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
+            NodeId nodeCmdChangeRequest = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
+
+            OpcUaUtility.writeValue(client, nodeCntrlCmd, new Variant(2));
+            OpcUaUtility.writeValue(client, nodeCmdChangeRequest, new Variant(true));
+
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
+    public void resetCommand() {
+        try {
+            OpcUaClient client = OpcUaClientSingleton.getInstance();
+
+            NodeId nodeCntrlCmd = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
+            NodeId nodeCmdChangeRequest = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
+
+            OpcUaUtility.writeValue(client, nodeCntrlCmd, new Variant(1));
+            OpcUaUtility.writeValue(client, nodeCmdChangeRequest, new Variant(true));
+
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
+
     public void cancelProduction() {
         try {
             OpcUaClient client = OpcUaClientSingleton.getInstance();
@@ -55,4 +87,34 @@ public class CommandController {
         }
     }
 
+    public void setAmount(Map<String, Integer> requestBody) {
+        try {
+            Integer beerType = requestBody.get("amount");
+            OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
+            NodeId beerTypeNode = new NodeId(6, "::Program:Cube.Command.Parameter[2].Value");
+            OpcUaUtility.writeValue(opcClient, beerTypeNode, new Variant((float) beerType));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void setSpeed(Map<String, Integer> requestBody) {
+        try {
+            Integer beerType = requestBody.get("speed");
+            OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
+            NodeId beerTypeNode = new NodeId(6, "::Program:Cube.Command.MachSpeed");
+            OpcUaUtility.writeValue(opcClient, beerTypeNode, new Variant((float) beerType));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void setBatchId(Map<String, Integer> requestBody) {
+        try {
+            Integer beerType = requestBody.get("batchid");
+            OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
+            NodeId beerTypeNode = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
+            OpcUaUtility.writeValue(opcClient, beerTypeNode, new Variant((float) beerType));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

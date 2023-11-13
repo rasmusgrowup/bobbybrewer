@@ -5,6 +5,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -48,8 +49,18 @@ public class OPCController implements IOPCController {
     }
 
     @Override
-    public void startProduction() {
-
+    @PostMapping("/start_production")
+    public void startProduction(@RequestBody Map<String, Integer> requestBody) throws Exception {
+        CommandController commandController = new CommandController();
+        commandController.resetCommand();
+        while (!OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")).equals("4")){
+            System.out.println("Not reset yet, joo");
+        }
+        //TimeUnit.SECONDS.sleep(3);
+        commandController.setBeerType(requestBody);
+        commandController.setAmount(requestBody);
+        commandController.setSpeed(requestBody);
+        commandController.startProduction();
     }
 
     @Override

@@ -39,7 +39,7 @@ const Home: NextPage = () => {
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
         try {
-            const response = await fetch('/api/set-beer-type', {
+            const response = await fetch('/api/start_production', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

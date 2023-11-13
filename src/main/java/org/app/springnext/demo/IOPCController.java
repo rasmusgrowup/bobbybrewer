@@ -10,7 +10,7 @@ public interface IOPCController {
     void setBeerType(@RequestBody Map<String, Integer> requestBody);
     void setAmount(@RequestBody Map<String, Integer> requestBody);
     void setSpeed(@RequestBody Map<String, Integer> requestBody);
-    void startProduction();
+    void startProduction(@RequestBody Map<String, Integer> requestBody) throws Exception;
     void cancelProduction();
     void startMaintenance();
 }

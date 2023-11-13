@@ -8,7 +8,8 @@ import { useSlider } from '@mui/base/useSlider';
 
 const Home: NextPage = () => {
     const [data, setData] = useState<string | null>(null);
-    const [isLoading, setLoading] = useState<boolean>(false)
+    const [isLoading, setLoading] = useState<boolean>(true);
+    const [isProducing, setProducing] = useState<boolean>(false);
     const [amount, setAmount] = useState(100);
     const [speed, setSpeed] = useState(30);
     const [beerType, setBeerType] = useState(0);
@@ -61,6 +62,27 @@ const Home: NextPage = () => {
 
             if (response.ok) {
                 // Handle success, if needed
+                setProducing(true);
+                console.log("Function called with beerType: " + beerType)
+            } else {
+                // Handle errors
+                console.error('Failed to set beer type');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleStopProduction = async () => {
+        // Here, you can make a fetch request to send messages and multiple commands to the OPC server
+        try {
+            const response = await fetch('/api/stop_production', {
+                method: 'POST',
+            });
+
+            if (response.ok) {
+                // Handle success, if needed
+                setProducing(false);
                 console.log("Function called with beerType: " + beerType)
             } else {
                 // Handle errors
@@ -128,7 +150,8 @@ const Home: NextPage = () => {
                             max={100}
                             onChange={(_, newValue: any) => setSpeed(newValue)}
                         />
-                        <Button className={styles.formButton} type="submit" variant={"contained"} onClick={() => handleStartProduction()}>Start</Button>
+                        <Button className={styles.formButton} type="submit" variant={"contained"} onClick={() => handleStartProduction()} disabled={isProducing}>Start</Button>
+                        <Button className={styles.formButton} type="submit" variant={"outlined"} onClick={() => handleStopProduction()} disabled={!isProducing}>Stop</Button>
                     </div>
                 </div>
                 <div className={styles.buttons}>

@@ -65,6 +65,7 @@ public class OPCController implements IOPCController {
 
     @Override
     public void cancelProduction() {
-
+        CommandController commandController = new CommandController();
+        commandController.cancelProduction();
     }
 }

@@ -102,7 +102,7 @@ const Home: NextPage = () => {
     }, []);
 
     useEffect(() => {
-        const socket = io('http://localhost:8080'); // Replace with your Spring Boot server URL
+        const socket = io('http://localhost:8080/websocket-example'); // Replace with your Spring Boot server URL
 
         // Event listener for receiving messages from the server
         socket.on('message', (data) => {

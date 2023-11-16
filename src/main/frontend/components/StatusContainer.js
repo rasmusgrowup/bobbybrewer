@@ -1,18 +1,17 @@
 import styles from '../styles/Status.module.css'
 
-const StatusContainer = (data,status,isLoading) => {
+export default function StatusContainer(data, status) {
+    console.log(data)
 
     return (
         <div className={styles.container}>
             <div>
                 <div className={styles.status}>System status</div>
-                <div className={styles.response}>
-                    {data && <div> {data} </div>}
-                    {/*isLoading ? <></> : status ? <div className={styles.greenDot}/> : <div className={styles.redDot}/>*/}
-                </div>
+                    <div className={styles.response}>
+                        {data ? <div>Offline</div> : <div>Online</div>}
+                        {data ? <div className={styles.redDot}/> : <div className={styles.greenDot}/>}
+                    </div>
             </div>
         </div>
     )
 }
-
-export default StatusContainer

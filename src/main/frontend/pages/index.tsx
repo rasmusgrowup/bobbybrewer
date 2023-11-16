@@ -38,7 +38,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 }
 const Home: NextPage = () => {
     const [data, setData] = useState({
-        stateCurrent:0,
+        stateCurrent:null,
         totalProduced:null,
         goodProducts:null,
         badProducts:null,
@@ -53,7 +53,6 @@ const Home: NextPage = () => {
         vibration:null
     });
     const [isLoading, setLoading] = useState<boolean>(true);
-    const [status,setStatus] = useState<boolean>(false)
     const [isProducing, setProducing] = useState<boolean>(false);
     const [amount, setAmount] = useState(100);
     const [speed, setSpeed] = useState(30);
@@ -88,24 +87,21 @@ const Home: NextPage = () => {
                 .then(data => {
                     setData(data); // Assuming your JSON structure includes a "payload" property
                     setLoading(false);
-                    setStatus(true);
                 })
                 .catch(error => {
                     setData(error.toString());
-                    setStatus(false);
                     console.error('An error occurred:', error);
                 });
         };
         // Call the function once immediately, then set the interval
         fetchData();
-        const intervalId = setInterval(fetchData, 100); // 1000ms = 1 second
+        const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
 
         // Cleanup function to clear the interval when the component unmounts
         return () => clearInterval(intervalId);
     }, []);
 
 
-    console.log(data);
     //console.log("slider value: " + speed);
     //console.log("Beer type: " + beerType);
 
@@ -186,7 +182,7 @@ const Home: NextPage = () => {
                     <h1>BobbyBrewer - Beer Brewing Machine</h1>
                     <img className={styles.beerLogo} src="/indexlogo.png" alt="beer" />
                 </div>
-                <StatusContainer data={data.stateCurrent ? data.stateCurrent : " "} status={status} isLoading={isLoading} />
+                <StatusContainer data={data.stateCurrent}/>
                 <div>Status of the machine: {data.stateCurrent}</div>
                 <div>totalProduced: {data.totalProduced}</div>
                 <div>goodProducts: {data.goodProducts}</div>

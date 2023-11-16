@@ -20,7 +20,7 @@ import {useSlider} from '@mui/base/useSlider';
 import {Simulate} from "react-dom/test-utils";
 import progress = Simulate.progress;
 import StatusContainer from "../components/StatusContainer";
-
+import io from 'socket.io-client';
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -101,6 +101,20 @@ const Home: NextPage = () => {
         return () => clearInterval(intervalId);
     }, []);
 
+    useEffect(() => {
+        const socket = io('http://localhost:8080'); // Replace with your Spring Boot server URL
+
+        // Event listener for receiving messages from the server
+        socket.on('message', (data) => {
+            console.log('Received message from server:', data);
+            // Update your UI or perform actions based on the received data
+        });
+
+        // Clean up the socket connection on component unmount
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
 
     //console.log("slider value: " + speed);
     //console.log("Beer type: " + beerType);

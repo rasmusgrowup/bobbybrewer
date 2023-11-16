@@ -174,7 +174,7 @@ const Home: NextPage = () => {
             <Head>
                 <title>BobbyBrewer</title>
                 <meta name="description" content="BobbyBrewer logo"/>
-                <link rel="icon" href="/favicon.ico"/>
+                <link rel="icon" type={"image/ico"} href="/favicon.ico"/>
             </Head>
 
             <main className={styles.main}>
@@ -237,7 +237,7 @@ const Home: NextPage = () => {
                         />
                         <Button className={styles.formButton} type="submit" variant={"contained"}
                                 onClick={() => handleStartProduction()} disabled={data.stateCurrent == 6}>Start</Button>
-                        <Button className={styles.formButton} type="submit" variant={"outlined"}
+                        <Button className={styles.formButton} type="submit" variant={"contained"}
                                 onClick={() => handleStopProduction()} disabled={data.stateCurrent != 6}>Stop</Button>
                     </div>
                 </div>

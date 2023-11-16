@@ -102,22 +102,19 @@ const Home: NextPage = () => {
     }, []);
 
     useEffect(() => {
-        const socket = io('http://localhost:8080/websocket-example'); // Replace with your Spring Boot server URL
+        const eventSource = new EventSource('/sse/stream');
 
-        // Event listener for receiving messages from the server
-        socket.on('/topic/messages', (data) => {
-            console.log('Received message from server:', data);
-            // Update your UI or perform actions based on the received data
-        });
+        eventSource.onmessage = (event) => {
+            const eventData = JSON.parse(event.data);
+            // Update your UI with the received data
+            console.log('Received SSE:', eventData);
+        };
 
-        // Clean up the socket connection on component unmount
         return () => {
-            socket.disconnect();
+            // Cleanup when component is unmounted
+            eventSource.close();
         };
     }, []);
-
-    //console.log("slider value: " + speed);
-    //console.log("Beer type: " + beerType);
 
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server

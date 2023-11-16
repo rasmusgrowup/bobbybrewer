@@ -38,7 +38,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 }
 const Home: NextPage = () => {
     const [data, setData] = useState({
-        stateCurrent:null,
+        stateCurrent:0,
         totalProduced:null,
         goodProducts:null,
         badProducts:null,
@@ -53,6 +53,7 @@ const Home: NextPage = () => {
         vibration:null
     });
     const [isLoading, setLoading] = useState<boolean>(true);
+    const [status,setStatus] = useState<boolean>(false)
     const [isProducing, setProducing] = useState<boolean>(false);
     const [amount, setAmount] = useState(100);
     const [speed, setSpeed] = useState(30);
@@ -87,9 +88,11 @@ const Home: NextPage = () => {
                 .then(data => {
                     setData(data); // Assuming your JSON structure includes a "payload" property
                     setLoading(false);
+                    setStatus(true);
                 })
                 .catch(error => {
                     setData(error.toString());
+                    setStatus(false);
                     console.error('An error occurred:', error);
                 });
         };
@@ -183,7 +186,7 @@ const Home: NextPage = () => {
                     <h1>BobbyBrewer - Beer Brewing Machine</h1>
                     <img className={styles.beerLogo} src="/indexlogo.png" alt="beer" />
                 </div>
-                <StatusContainer />
+                <StatusContainer data={data.stateCurrent ? data.stateCurrent : " "} status={status} isLoading={isLoading} />
                 <div>Status of the machine: {data.stateCurrent}</div>
                 <div>totalProduced: {data.totalProduced}</div>
                 <div>goodProducts: {data.goodProducts}</div>

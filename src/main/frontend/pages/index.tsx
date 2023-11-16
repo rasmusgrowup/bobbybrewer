@@ -105,7 +105,7 @@ const Home: NextPage = () => {
         const socket = io('http://localhost:8080/websocket-example'); // Replace with your Spring Boot server URL
 
         // Event listener for receiving messages from the server
-        socket.on('message', (data) => {
+        socket.on('/topic/messages', (data) => {
             console.log('Received message from server:', data);
             // Update your UI or perform actions based on the received data
         });

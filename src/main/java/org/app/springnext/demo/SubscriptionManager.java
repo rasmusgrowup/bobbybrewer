@@ -12,13 +12,11 @@ package org.app.springnext.demo;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaMonitoredItem;
 import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaSubscription;
 import org.eclipse.milo.opcua.stack.core.AttributeId;
-import org.eclipse.milo.opcua.stack.core.Identifiers;
 import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
@@ -40,8 +38,12 @@ public class SubscriptionManager {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final SseController sseController;
+
     @Autowired
-    private SseController sseController;
+    public SubscriptionManager(SseController sseController) {
+        this.sseController = sseController;
+    }
 
     public CompletableFuture<Void> run(OpcUaClient client) throws Exception {
         // synchronous connect
@@ -52,7 +54,8 @@ public class SubscriptionManager {
         UaSubscription subscription = client.getSubscriptionManager().createSubscription(1000.0).get();
 
         // Node to listen to
-        NodeId nodeId = new NodeId(6, "::Program:Cube.Status.StateCurrent");
+        //NodeId nodeId = new NodeId(6, "::Program:Cube.Status.StateCurrent");
+        NodeId nodeId = new NodeId(1, "MyVariable");
         // subscribe to the Value attribute of the server's CurrentTime node
         ReadValueId readValueId = new ReadValueId(
                 nodeId,
@@ -109,7 +112,11 @@ public class SubscriptionManager {
         logger.info(
                 "subscription value received: item={}, value={}",
                 item.getReadValueId().getNodeId(), value.getValue());
-        // Send SSE event to the frontend
-        sseController.sendSseEvent(value.getValue().getValue().toString());
+        // Send SSE event to the frontend using the autowired instance
+        if (sseController != null) {
+            sseController.sendSseEvent(value.getValue().getValue().toString());
+        } else {
+            logger.error("SseController is null");
+        }
     }
 }

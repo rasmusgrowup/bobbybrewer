@@ -3,24 +3,15 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import {
     Button,
-    Grid,
-    Container,
-    FormControl,
     FormControlLabel,
     LinearProgressProps,
-    Input,
-    InputLabel,
     Radio,
     RadioGroup,
     Slider, LinearProgress, Box, Typography
 } from "@mui/material";
 import {Unstable_NumberInput as NumberInput} from '@mui/base/Unstable_NumberInput';
 import React, {useEffect, useState} from "react";
-import {useSlider} from '@mui/base/useSlider';
-import {Simulate} from "react-dom/test-utils";
-import progress = Simulate.progress;
 import StatusContainer from "../components/StatusContainer";
-
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -52,6 +43,7 @@ const Home: NextPage = () => {
         temperature:null,
         vibration:null
     });
+    const [sseData, setSseData] = useState("")
     const [isLoading, setLoading] = useState<boolean>(true);
     const [isProducing, setProducing] = useState<boolean>(false);
     const [amount, setAmount] = useState(100);
@@ -95,15 +87,35 @@ const Home: NextPage = () => {
         };
         // Call the function once immediately, then set the interval
         fetchData();
-        const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
+        //const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
 
         // Cleanup function to clear the interval when the component unmounts
-        return () => clearInterval(intervalId);
+        //return () => clearInterval(intervalId);
     }, []);
 
+    useEffect(() => {
+        const eventSource = new EventSource('/sse/stream');
 
-    //console.log("slider value: " + speed);
-    //console.log("Beer type: " + beerType);
+        eventSource.onopen = () => {
+            console.log('EventSource connection opened');
+        };
+
+        eventSource.onmessage = (event) => {
+            const newData = JSON.parse(event.data);
+            setSseData(newData);
+            console.log("Logged data from sse: " + newData);
+            // Handle the received data as needed
+        };
+
+        eventSource.onerror = (error) => {
+            console.error('EventSource failed:', error);
+        };
+
+        // Clean up the EventSource connection when the component unmounts
+        return () => {
+            eventSource.close();
+        };
+    }, []);
 
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
@@ -196,6 +208,7 @@ const Home: NextPage = () => {
                 <div>humidity: {data.humidity}</div>
                 <div>temperature: {data.temperature}</div>
                 <div>vibration: {data.vibration}</div>
+                <div>SSE: {sseData}</div>
                 <LinearProgressWithLabel value={progressYeast} />
                 <LinearProgressWithLabel value={progressWheat} />
                 <LinearProgressWithLabel value={progressMalt} />
@@ -248,7 +261,6 @@ const Home: NextPage = () => {
                             <Button variant={"outlined"}>Refill Ingredients</Button>
                         </div>
                     </div>
-
             </main>
         </div>
     )

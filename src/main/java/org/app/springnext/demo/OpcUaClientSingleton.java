@@ -8,6 +8,7 @@ public class OpcUaClientSingleton {
 
     private static OpcUaClient instance;
     private static final String ENDPOINT_URL = "opc.tcp://127.0.0.1:4840";
+    private static final String TEST_ENDPOINT_URL = "opc.tcp://127.0.0.1:4334"; // node server endpoint for mac users
 
     OpcUaClientSingleton() {
     }

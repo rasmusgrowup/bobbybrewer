@@ -1,7 +1,7 @@
 .container {
     align-content: center;
     border: 1px solid rgba(25, 118, 210, 0.5);
-    border-radius: 0.66rem;
+    border-radius: var(--border-radius);
     display: flex;
     left: 2rem;
     padding: 1rem;

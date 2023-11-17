@@ -1,4 +1,4 @@
-import styles from '../styles/Status.module.css'
+import styles from '../styles/Home.module.css'
 
 export default function StatusContainer({data}) {
     let content;
@@ -12,13 +12,13 @@ export default function StatusContainer({data}) {
     }
 
     return (
-        <div className={styles.container}>
-            <div>
+        <div className={styles.statusContainer}>
+            <div className={styles.inner}>
+                <div className={styles.response}>
+                    {!data ? <div className={styles.responseStatus}>Offline</div> : <div className={styles.responseStatus}>Online</div>}
+                    {!data ? <div className={styles.redDot}/> : <div className={styles.greenDot}/>}
+                </div>
                 <div className={styles.status}>System status: {content}</div>
-                    <div className={styles.response}>
-                        {!data ? <div className={styles.responseStatus}>Offline</div> : <div className={styles.responseStatus}>Online</div>}
-                        {!data ? <div className={styles.redDot}/> : <div className={styles.greenDot}/>}
-                    </div>
             </div>
         </div>
     )

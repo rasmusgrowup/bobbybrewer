@@ -12,6 +12,8 @@ import {
 import {Unstable_NumberInput as NumberInput} from '@mui/base/Unstable_NumberInput';
 import React, {useEffect, useState} from "react";
 import StatusContainer from "../components/StatusContainer";
+import InventoryContainer from "../components/InventoryContainer";
+import FormContainer from "../components/FormContainer";
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -27,6 +29,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
         </Box>
     );
 }
+
 const Home: NextPage = () => {
     const [data, setData] = useState({
         stateCurrent:null,
@@ -45,10 +48,6 @@ const Home: NextPage = () => {
     });
     const [sseData, setSseData] = useState("")
     const [isLoading, setLoading] = useState<boolean>(true);
-    const [isProducing, setProducing] = useState<boolean>(false);
-    const [amount, setAmount] = useState(100);
-    const [speed, setSpeed] = useState(30);
-    const [beerType, setBeerType] = useState(0);
     const [progressYeast, setProgressYeast] = useState(0);
     const [progressWheat, setProgressWheat] = useState(0);
     const [progressMalt, setProgressMalt] = useState(0);
@@ -117,54 +116,6 @@ const Home: NextPage = () => {
         };
     }, []);
 
-    const handleStartProduction = async () => {
-        // Here, you can make a fetch request to send messages and multiple commands to the OPC server
-        try {
-            const response = await fetch('/api/start_production', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    "beerType": beerType,
-                    "amount": amount,
-                    "speed": speed
-                }), // Send the integer value (1 in this case)
-            });
-
-            if (response.ok) {
-                // Handle success, if needed
-                setProducing(true);
-                console.log("Function called with beerType: " + beerType)
-            } else {
-                // Handle errors
-                console.error('Failed to set beer type');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
-    const handleStopProduction = async () => {
-        // Here, you can make a fetch request to send messages and multiple commands to the OPC server
-        try {
-            const response = await fetch('/api/stop_production', {
-                method: 'POST',
-            });
-
-            if (response.ok) {
-                // Handle success, if needed
-                setProducing(false);
-                console.log("Function called with beerType: " + beerType)
-            } else {
-                // Handle errors
-                console.error('Failed to set beer type');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
     const startMaintenance = async () => {
         try {
             const response = await fetch('/api/startMaintenance', {
@@ -181,7 +132,7 @@ const Home: NextPage = () => {
     };
 
     return (
-        <div className={styles.container}>
+        <>
             <Head>
                 <title>BobbyBrewer</title>
                 <meta name="description" content="BobbyBrewer logo"/>
@@ -194,8 +145,10 @@ const Home: NextPage = () => {
                     <h1>BobbyBrewer - Beer Brewing Machine</h1>
                     <img className={styles.beerLogo} src="/indexlogo.png" alt="beer" />
                 </div>
-                <StatusContainer data={data.stateCurrent}/>
-                <div>Status of the machine: {data.stateCurrent}</div>
+                <div className={styles.dashboard}>
+                    <FormContainer data={data.stateCurrent} />
+                    <InventoryContainer data={data}/>
+                    {/* <div>Status of the machine: {data.stateCurrent}</div>
                 <div>totalProduced: {data.totalProduced}</div>
                 <div>goodProducts: {data.goodProducts}</div>
                 <div>badProducts: {data.badProducts}</div>
@@ -209,60 +162,21 @@ const Home: NextPage = () => {
                 <div>temperature: {data.temperature}</div>
                 <div>vibration: {data.vibration}</div>
                 <div>SSE: {sseData}</div>
-                <LinearProgressWithLabel value={progressYeast} />
-                <LinearProgressWithLabel value={progressWheat} />
-                <LinearProgressWithLabel value={progressMalt} />
-                <LinearProgressWithLabel value={progressHops} />
-                <LinearProgressWithLabel value={progressBarley} />
                 <LinearProgressWithLabel value={progressMaintenance} />
-                <h2>Production Settings</h2>
-                <div className={styles.form}>
-                    <div className={styles.column}>
-                        <label>Choose a beer type</label>
-                        <RadioGroup onChange={(event, val:any) => setBeerType(val)} value={beerType} aria-labelledby="demo-radio-buttons-group-label" defaultValue="pilsner" name="radio-buttons-group">
-                            <FormControlLabel value="0" control={<Radio className={styles['custom-radio']} />} label="Pilsner" />
-                            <FormControlLabel value="1" control={<Radio className={styles['custom-radio']} />} label="Wheat" />
-                            <FormControlLabel value="2" control={<Radio className={styles['custom-radio']} />} label="IPA" />
-                            <FormControlLabel value="3" control={<Radio className={styles['custom-radio']} />} label="Stout" />
-                            <FormControlLabel value="4" control={<Radio className={styles['custom-radio']} />} label="Ale" />
-                            <FormControlLabel value="5" control={<Radio className={styles['custom-radio']} />} label="Alcohol-free" />
-                        </RadioGroup>
-                    </div>
-                    <div className={styles.column}>
-                        <label>Choose amount</label>
-                        <NumberInput
-                            aria-label="Amount of beer"
-                            placeholder="Choose amount of beer"
-                            value={amount}
-                            onChange={(event, val: any) => setAmount(val)}
-                            step={100}
-                        />
-                        <label className={styles.speedLabel}>Choose production speed: {speed}</label>
-                        <Slider
-                            aria-label="speed"
-                            defaultValue={30}
-                            step={10}
-                            marks
-                            min={0}
-                            max={100}
-                            onChange={(_, newValue: any) => setSpeed(newValue)}
-                        />
-                        <Button className={styles.formButton} type="submit" variant={"contained"}
-                                onClick={() => handleStartProduction()} disabled={data.stateCurrent == 6}>Start</Button>
-                        <Button className={styles.formButton} type="submit" variant={"contained"}
-                                onClick={() => handleStopProduction()} disabled={data.stateCurrent != 6}>Stop</Button>
-                    </div>
-                </div>
-                <h2>Production Actions</h2>
-                    <div className={styles.formActions}>
-                        <div className={styles.buttons}>
-                            <Button variant="outlined" onClick={() => startMaintenance()}>Start Maintenance</Button>
-                            <Button type="submit" variant={"outlined"} onClick={() => handleStartProduction()}>Start Production</Button>
-                            <Button variant={"outlined"}>Refill Ingredients</Button>
+                <div className={styles.production}>
+                        <h2>Production Actions</h2>
+                        <div className={styles.formActions}>
+                            <div className={styles.buttons}>
+                                <Button variant="outlined" onClick={() => startMaintenance()}>Start Maintenance</Button>
+                                <Button type="submit" variant={"outlined"} onClick={() => handleStartProduction()}>Start Production</Button>
+                                <Button variant={"outlined"}>Refill Ingredients</Button>
+                            </div>
                         </div>
-                    </div>
+                    </div> */}
+                    <StatusContainer data={data.stateCurrent}/>
+                </div>
             </main>
-        </div>
+        </>
     )
 }
 

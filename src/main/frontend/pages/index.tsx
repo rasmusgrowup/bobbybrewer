@@ -87,10 +87,10 @@ const Home: NextPage = () => {
         };
         // Call the function once immediately, then set the interval
         fetchData();
-        //const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
+        const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
 
         // Cleanup function to clear the interval when the component unmounts
-        //return () => clearInterval(intervalId);
+        return () => clearInterval(intervalId);
     }, []);
 
     useEffect(() => {

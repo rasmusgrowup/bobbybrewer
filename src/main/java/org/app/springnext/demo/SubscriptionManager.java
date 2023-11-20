@@ -54,8 +54,8 @@ public class SubscriptionManager {
         UaSubscription subscription = client.getSubscriptionManager().createSubscription(1000.0).get();
 
         // Node to listen to
-        //NodeId nodeId = new NodeId(6, "::Program:Cube.Status.StateCurrent");
-        NodeId nodeId = new NodeId(1, "MyVariable");
+        NodeId nodeId = new NodeId(6, "::Program:Cube.Status.StateCurrent");
+        //NodeId nodeId = new NodeId(1, "MyVariable");
         // subscribe to the Value attribute of the server's CurrentTime node
         ReadValueId readValueId = new ReadValueId(
                 nodeId,

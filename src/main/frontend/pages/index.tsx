@@ -118,6 +118,15 @@ const Home: NextPage = () => {
     }, []);
 
     const handleStartProduction = async () => {
+        const maintenanceCounter = parseFloat(String(data.maintenanceCounter)); // Sikre at data.maintenanceCounter et tal
+        const inputAmount = amount; //Sætter amount til inputAmount
+        const maintenanceTotal = maintenanceCounter + inputAmount; //Lægger counter og amount sammen
+        //Tjekker om det overgår 36000
+        if (maintenanceTotal >= 36000) {
+            // Vha. alert vis besked omkring maintenance
+            alert("Maintenance will be required midway with current amount in input! Please initiate maintenance, if you wish to produce this many.");
+            return;
+        }
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
         try {
             const response = await fetch('/api/start_production', {

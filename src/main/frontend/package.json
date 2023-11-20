@@ -14,7 +14,9 @@
     "@emotion/styled": "^11.10.4",
     "@mui/base": "^5.0.0-beta.23",
     "@mui/material": "^5.10.10",
+    "@mui/x-charts": "^6.18.1",
     "next": "12.3.1",
+    "next-transpile-modules": "^10.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "socket.io-client": "^4.7.2"

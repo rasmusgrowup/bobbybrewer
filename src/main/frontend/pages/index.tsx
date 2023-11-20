@@ -14,6 +14,7 @@ import React, {useEffect, useState} from "react";
 import StatusContainer from "../components/StatusContainer";
 import InventoryContainer from "../components/InventoryContainer";
 import FormContainer from "../components/FormContainer";
+import ChartContainer from "../components/ChartContainer";
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -148,6 +149,7 @@ const Home: NextPage = () => {
                 <div className={styles.dashboard}>
                     <FormContainer data={data.stateCurrent} />
                     <InventoryContainer data={data}/>
+                    <ChartContainer />
                     {/* <div>Status of the machine: {data.stateCurrent}</div>
                 <div>totalProduced: {data.totalProduced}</div>
                 <div>goodProducts: {data.goodProducts}</div>

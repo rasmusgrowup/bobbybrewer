@@ -8,6 +8,7 @@
   position: relative;
   width: 100vw;
   height: 100vh;
+  min-height: 800px;
   z-index: 0;
 }
 
@@ -27,6 +28,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 99;
 }
 
 .production {
@@ -157,11 +160,12 @@
   display: inline-block;
 }
 
+.chartContainer:before,
 .formContainer:before,
 .statusContainer:before,
 .inventory:before {
   border-radius: var(--border-radius);
-  box-shadow: 0px 0px 100px var(--shadow-color);
+  box-shadow: 0px 0px 200px var(--shadow-color);
   content: '';
   height: 100%;
   position: absolute;
@@ -171,4 +175,14 @@
   right: 0;
   width: 100%;
   z-index: -1;
+}
+
+/* ///// ChartContainer Styling ///// */
+.chartContainer {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  padding: 2rem 1.66rem;
+  position: relative;
+  grid-column: 4 / span 6;
+  grid-row: 4 / span 5;
 }

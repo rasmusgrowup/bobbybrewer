@@ -162,6 +162,21 @@ a {
   content: '-'
 }
 
+/*
 .MuiTypography-root {
   color: var(--main-color);
+}
+*/
+
+.MuiChartsAxis-root .MuiChartsAxis-tick,
+.MuiChartsAxis-root .MuiChartsAxis-line {
+  stroke: var(--main-color);
+}
+
+.MuiChartsAxis-root .MuiChartsAxis-tickLabel {
+  fill: var(--main-color);
+}
+
+.MuiChartsAxisHighlight-root {
+  stroke: var(--main-color);
 }

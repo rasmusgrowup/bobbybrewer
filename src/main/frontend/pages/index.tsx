@@ -87,10 +87,10 @@ const Home: NextPage = () => {
         };
         // Call the function once immediately, then set the interval
         fetchData();
-        //const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
-
+        const intervalId = setInterval(fetchData, 500); // 1000ms = 1 second
+        //console.log(data);
         // Cleanup function to clear the interval when the component unmounts
-        //return () => clearInterval(intervalId);
+        return () => clearInterval(intervalId);
     }, []);
 
     useEffect(() => {
@@ -110,6 +110,7 @@ const Home: NextPage = () => {
         eventSource.onerror = (error) => {
             console.error('EventSource failed:', error);
         };
+        console.log(sseData)
 
         // Clean up the EventSource connection when the component unmounts
         return () => {
@@ -147,7 +148,7 @@ const Home: NextPage = () => {
                     <img className={styles.beerLogo} src="/indexlogo.png" alt="beer" />
                 </div>
                 <div className={styles.dashboard}>
-                    <FormContainer data={data.stateCurrent} />
+                    <FormContainer data={data} />
                     <InventoryContainer data={data}/>
                     <ChartContainer />
                     {/* <div>Status of the machine: {data.stateCurrent}</div>
@@ -175,7 +176,7 @@ const Home: NextPage = () => {
                             </div>
                         </div>
                     </div> */}
-                    <StatusContainer data={data.stateCurrent}/>
+                    <StatusContainer data={sseData}/>
                 </div>
             </main>
         </>

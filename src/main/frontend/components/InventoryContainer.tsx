@@ -1,5 +1,5 @@
 import {Box, LinearProgress, LinearProgressProps, Typography} from "@mui/material";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styles from '../styles/Home.module.css'
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
@@ -17,21 +17,35 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
     );
 }
 
-export default function InventoryContainer(data: any) {
+export default function InventoryContainer({data}: {data: any}) {
+    console.log(data);
 
+    const [progressYeast, setProgressYeast] = useState(0);
+    const [progressWheat, setProgressWheat] = useState(0);
+    const [progressMalt, setProgressMalt] = useState(0);
+    const [progressHops, setProgressHops] = useState(0);
+    const [progressBarley, setProgressBarley] = useState(0);
+
+    useEffect(()=> {
+        setProgressYeast(data.inventoryYeast/35000*100);
+        setProgressWheat(data.inventoryWheat/35000*100);
+        setProgressMalt(data.inventoryMalt/35000*100);
+        setProgressHops(data.inventoryHops/35000*100);
+        setProgressBarley(data.inventoryBarley/35000*100);
+    },[data])
     return (
         <div className={styles.inventory}>
             <header className={styles.inventoryHeader}>Ingredients inventory</header>
             <div className={styles.inventoryType}>Yeast:</div>
-            <LinearProgressWithLabel value={data.progressYeast}/>
+            <LinearProgressWithLabel value={progressYeast}/>
             <div className={styles.inventoryType}>Wheat:</div>
-            <LinearProgressWithLabel value={data.progressWheat} />
+            <LinearProgressWithLabel value={progressWheat} />
             <div className={styles.inventoryType}>Malt:</div>
-            <LinearProgressWithLabel value={data.progressMalt} />
+            <LinearProgressWithLabel value={progressMalt} />
             <div className={styles.inventoryType}>Hops:</div>
-            <LinearProgressWithLabel value={data.progressHops} />
+            <LinearProgressWithLabel value={progressHops} />
             <div className={styles.inventoryType}>Barley:</div>
-            <LinearProgressWithLabel value={data.progressBarley} />
+            <LinearProgressWithLabel value={progressBarley} />
         </div>
     )
 }

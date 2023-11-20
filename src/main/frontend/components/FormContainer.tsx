@@ -3,7 +3,7 @@ import {Unstable_NumberInput as NumberInput} from '@mui/base/Unstable_NumberInpu
 import styles from '../styles/Home.module.css'
 import {useState} from "react";
 
-export default function FormContainer(data: any) {
+export default function FormContainer({data}: {data: any}) {
     const [amount, setAmount] = useState(100);
     const [speed, setSpeed] = useState(30);
     const [beerType, setBeerType] = useState(0);
@@ -33,6 +33,7 @@ export default function FormContainer(data: any) {
             console.error('Error:', error);
         }
     };
+    console.log(data);
 
     const handleStopProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server

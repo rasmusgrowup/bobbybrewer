@@ -2,6 +2,7 @@ import styles from '../styles/Home.module.css'
 
 export default function StatusContainer({data}) {
     let content;
+    console.log("StatusContainer: " + data)
 
     switch (data) {
         case '6':

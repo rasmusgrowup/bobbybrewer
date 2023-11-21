@@ -10,11 +10,14 @@
     "export": "next build && next export"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@mui/base": "^5.0.0-beta.23",
-    "@mui/material": "^5.10.10",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
+    "@mui/x-charts": "^6.18.1",
     "next": "12.3.1",
+    "next-transpile-modules": "^10.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "socket.io-client": "^4.7.2"

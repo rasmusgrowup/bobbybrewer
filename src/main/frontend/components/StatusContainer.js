@@ -2,9 +2,11 @@ import styles from '../styles/Home.module.css'
 
 export default function StatusContainer({data}) {
     let content;
-    console.log("StatusContainer: " + data)
+   // console.log("StatusContainer: " + data)
+    const stateCurrentValue = data['Cube.Status.StateCurrent'];
+    console.log(stateCurrentValue);
 
-    switch (data) {
+    switch (stateCurrentValue) {
         case '6':
             content = "Brewing";
             break;

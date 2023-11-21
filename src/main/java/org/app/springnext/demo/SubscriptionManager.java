@@ -45,7 +45,7 @@ public class SubscriptionManager {
         this.sseController = sseController;
     }
 
-    public CompletableFuture<Void> run(OpcUaClient client) throws Exception {
+    public CompletableFuture<Void> run(OpcUaClient client, NodeId nodeId) throws Exception {
         // synchronous connect
         CompletableFuture<Void> future = new CompletableFuture<>();
         client = OpcUaClientSingleton.getInstance();
@@ -53,13 +53,12 @@ public class SubscriptionManager {
         // create a subscription @ 1000ms
         UaSubscription subscription = client.getSubscriptionManager().createSubscription(1000.0).get();
 
-        // Node to listen to
-        NodeId nodeId = new NodeId(6, "::Program:Cube.Status.StateCurrent");
-        //NodeId nodeId = new NodeId(1, "MyVariable");
         // subscribe to the Value attribute of the server's CurrentTime node
         ReadValueId readValueId = new ReadValueId(
                 nodeId,
-                AttributeId.Value.uid(), null, QualifiedName.NULL_VALUE
+                AttributeId.Value.uid(),
+                null,
+                QualifiedName.NULL_VALUE
         );
 
         // IMPORTANT: client handle must be unique per item within the context of a subscription.
@@ -108,7 +107,7 @@ public class SubscriptionManager {
         return future;
     }
 
-    private void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
+  /*  private void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
         logger.info(
                 "subscription value received: item={}, value={}",
                 item.getReadValueId().getNodeId(), value.getValue());
@@ -118,5 +117,25 @@ public class SubscriptionManager {
         } else {
             logger.error("SseController is null");
         }
+    }*/
+    private void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
+        logger.info(
+                "subscription value received: item={}, value={}",
+                item.getReadValueId().getNodeId(), value.getValue());
+
+        // Assuming that the nodeId can be used to distinguish the type of data,
+        // you would pass both the nodeId and the value in the SSE event.
+        String nodeId = item.getReadValueId().getNodeId().toParseableString();
+        String dataValue = value.getValue().getValue().toString();
+
+        // Create a JSON object to send as SSE data
+        String sseData = String.format("{\"nodeId\":\"%s\",\"value\":%s}", nodeId, dataValue);
+
+        if (sseController != null) {
+            sseController.sendSseEvent(sseData);
+        } else {
+            logger.error("SseController is null");
+        }
     }
+
 }

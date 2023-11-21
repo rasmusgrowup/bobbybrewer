@@ -33,7 +33,7 @@ export default function FormContainer({data}: {data: any}) {
             console.error('Error:', error);
         }
     };
-    console.log(data);
+
 
     const handleStopProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server

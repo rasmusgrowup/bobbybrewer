@@ -56,7 +56,7 @@ export default function FormContainer({data}: {data: any}) {
 
     return (
         <div className={styles.formContainer}>
-            <header className={styles.formHeader}>Production Settings</header>
+            {/* <header className={styles.formHeader}>Production Settings</header> */}
             <div className={styles.form}>
                 <div className={styles.column}>
                     <RadioGroup onChange={(event, val: any) => setBeerType(val)} value={beerType}

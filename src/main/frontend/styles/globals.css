@@ -19,10 +19,13 @@ a {
 
 :root {
   --background-color: rgb(13, 18, 38);
+  --background-color-darker: rgb(5, 10, 23);
   --border-color: rgba(25, 118, 210, 0.5);
   --border-radius: 0.66rem;
   --main-color: #ffffff;
+  --main-accent: #63ffed;
   --shadow-color: rgba(0, 0, 0, 0.75);
+  --thin-lines: rgba(255, 255, 255, 0.2);
 }
 
 .MuiNumberInput-input {

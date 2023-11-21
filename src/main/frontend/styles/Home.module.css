@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2rem;
+  /*padding: 2rem;*/
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -99,7 +99,7 @@
   justify-content: center;
   grid-column: 4 / span 2;
   grid-row: 1 / span 3;
-  padding: 2rem 1.66rem;
+  padding: 1rem 1.66rem;
   position: relative;
 }
 
@@ -160,6 +160,9 @@
   display: inline-block;
 }
 
+.basicTable:before,
+.maintenanceBar:before,
+.sensorContainer:before,
 .chartContainer:before,
 .formContainer:before,
 .statusContainer:before,
@@ -185,4 +188,114 @@
   position: relative;
   grid-column: 4 / span 6;
   grid-row: 4 / span 5;
+}
+
+/* ///// SensorContainer Styling ///// */
+.sensorContainer {
+  align-items: center;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  grid-column: 6 / span 4;
+  grid-row: 1 / span 2;
+  justify-content: center;
+  padding: 1rem 1.66rem;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.sensorContainer header {
+  display: block;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.sensorContainerInner {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.sensorItem {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.sensorData {
+  margin-top: 0.25rem;
+  font-size: 120%;
+}
+
+.sensorItem p {
+  margin: 0.5rem 0 0 0;
+  font-size: 70%;
+}
+
+/* ///// MaintenanceBar Styling ///// */
+.maintenanceBar {
+  align-items: center;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  grid-column: 6 / span 4;
+  grid-row: 3 / span 1;
+  justify-content: center;
+  padding: 1rem 1.66rem;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.maintenanceBar header {
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+/* ///// MaintenanceBar Styling ///// */
+.basicTable {
+  align-items: center;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  font-weight: normal;
+  grid-column: 4 / span 6;
+  grid-row: 4 / span 5;
+  justify-content: center;
+  padding: 1rem 1.66rem;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.basicTableInner {
+  /*background-color: var(--background-color-darker);*/
+  max-height: 350px;
+  overflow: scroll;
+  padding-top: 3rem;
+  width: 100%;
+}
+
+.basicTableInner ul {
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--thin-lines);
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 0;
+  width: 100%;
+}
+
+.basicTableInner ul li {
+  flex: 1;
+  width: 25%;
+}
+
+.basicTableInner .stickyHeader {
+  position: absolute;
+  width: calc(100% - 3rem);
+  top: 1.5rem;
+  left: 1.5rem;
 }

@@ -35,7 +35,7 @@ export default function InventoryContainer({data}: {data: any}) {
     },[data])
     return (
         <div className={styles.inventory}>
-            <header className={styles.inventoryHeader}>Ingredients inventory</header>
+            {/* <header className={styles.inventoryHeader}>Ingredients inventory</header> */}
             <div className={styles.inventoryType}>Yeast:</div>
             <LinearProgressWithLabel value={progressYeast}/>
             <div className={styles.inventoryType}>Wheat:</div>

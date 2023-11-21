@@ -15,6 +15,9 @@ import StatusContainer from "../components/StatusContainer";
 import InventoryContainer from "../components/InventoryContainer";
 import FormContainer from "../components/FormContainer";
 import ChartContainer from "../components/ChartContainer";
+import SensorContainer from "../components/SensorContainer";
+import MaintenanceBar from "../components/MaintenanceBar";
+import BasicTable from "../components/BasicTable";
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -93,31 +96,6 @@ const Home: NextPage = () => {
         return () => clearInterval(intervalId);
     }, []);
 
-    useEffect(() => {
-        const eventSource = new EventSource('/sse/stream');
-
-        eventSource.onopen = () => {
-            console.log('EventSource connection opened');
-        };
-
-        eventSource.onmessage = (event) => {
-            const newData = JSON.parse(event.data);
-            setSseData(newData);
-            console.log("Logged data from sse: " + newData);
-            // Handle the received data as needed
-        };
-
-        eventSource.onerror = (error) => {
-            console.error('EventSource failed:', error);
-        };
-        console.log(sseData)
-
-        // Clean up the EventSource connection when the component unmounts
-        return () => {
-            eventSource.close();
-        };
-    }, []);
-
     const startMaintenance = async () => {
         try {
             const response = await fetch('/api/startMaintenance', {
@@ -150,7 +128,9 @@ const Home: NextPage = () => {
                 <div className={styles.dashboard}>
                     <FormContainer data={data} />
                     <InventoryContainer data={data}/>
-                    <ChartContainer />
+                    {/* <ChartContainer /> */}
+                    <SensorContainer data={data}/>
+                    <MaintenanceBar data={data}/>
                     {/* <div>Status of the machine: {data.stateCurrent}</div>
                 <div>totalProduced: {data.totalProduced}</div>
                 <div>goodProducts: {data.goodProducts}</div>
@@ -176,6 +156,7 @@ const Home: NextPage = () => {
                             </div>
                         </div>
                     </div> */}
+                    <BasicTable />
                     <StatusContainer data={sseData}/>
                 </div>
             </main>

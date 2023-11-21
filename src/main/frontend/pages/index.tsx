@@ -11,8 +11,8 @@ import BasicTable from "../components/BasicTable";
 
 const Home: NextPage = () => {
     const [data, setData] = useState({});
-
     const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
+
     useEffect(() => {
         const eventSource = new EventSource('/sse/stream');
 

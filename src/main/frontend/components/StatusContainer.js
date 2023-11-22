@@ -4,7 +4,7 @@ export default function StatusContainer({data}) {
     let content;
    // console.log("StatusContainer: " + data)
     const stateCurrentValue = data['Cube.Status.StateCurrent'];
-    console.log(stateCurrentValue);
+    //console.log(stateCurrentValue);
 
     switch (stateCurrentValue) {
         case '6':
@@ -18,8 +18,8 @@ export default function StatusContainer({data}) {
         <div className={styles.statusContainer}>
             <div className={styles.inner}>
                 <div className={styles.response}>
-                    {!data ? <div className={styles.responseStatus}>Offline</div> : <div className={styles.responseStatus}>Online</div>}
-                    {!data ? <div className={styles.redDot}/> : <div className={styles.greenDot}/>}
+                    {Object.keys(data).length === 0 ? <div className={styles.responseStatus}>Offline</div> : <div className={styles.responseStatus}>Online</div>}
+                    {Object.keys(data).length === 0 ? <div className={styles.redDot}/> : <div className={styles.greenDot}/>}
                 </div>
                 <div className={styles.status}>System status: {content}</div>
             </div>

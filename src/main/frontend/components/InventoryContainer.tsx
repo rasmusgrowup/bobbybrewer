@@ -18,7 +18,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 }
 
 export default function InventoryContainer({data}: {data: any}) {
-    console.log(data);
+    //console.log(data);
 
     const [progressYeast, setProgressYeast] = useState(0);
     const [progressWheat, setProgressWheat] = useState(0);
@@ -33,6 +33,7 @@ export default function InventoryContainer({data}: {data: any}) {
         setProgressHops(data.inventoryHops/35000*100);
         setProgressBarley(data.inventoryBarley/35000*100);
     },[data])
+
     return (
         <div className={styles.inventory}>
             {/* <header className={styles.inventoryHeader}>Ingredients inventory</header> */}

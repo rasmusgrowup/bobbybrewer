@@ -32,8 +32,8 @@ export default function BasicTable() {
                     <li>Defective Produced</li>
                     <li>Total Produced</li>
                 </ul>
-                {rows.map((row) => (
-                    <ul>
+                {rows.map((row, index) => (
+                    <ul key={index}>
                         <li>{row.name}</li>
                         <li>{row.calories}</li>
                         <li>{row.fat}</li>

@@ -19,10 +19,16 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 
 export default function MaintenanceBar({data}: {data: any}) {
     const counter = data['Maintenance.Counter'];
+    const [maintenance, setMaintenance] = useState(0);
+
+    useEffect(()=> {
+        setMaintenance(counter/65535*100);
+    },[data])
+
     return (
         <div className={styles.maintenanceBar}>
             <header>Maintenance:</header>
-            <LinearProgressWithLabel value={counter}/>
+            <LinearProgressWithLabel value={maintenance}/>
         </div>
     )
 }

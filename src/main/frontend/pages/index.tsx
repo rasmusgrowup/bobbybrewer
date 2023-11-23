@@ -47,10 +47,10 @@ const Home: NextPage = () => {
     console.log("counter" + counter)
 
     useEffect(()=>{
-        if(counter && counter < 0){
+        if(data['Cube.Status.StateCurrent'] == 10 && data['Cube.Admin.StopReason.Id'] == 10){
             setRefill(true)
         }
-    },[counter])
+    },data['Cube.Status.StateCurrent'])
 
     const startMaintenance = async () => {
         try {

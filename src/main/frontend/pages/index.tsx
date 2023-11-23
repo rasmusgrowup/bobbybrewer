@@ -10,10 +10,15 @@ import MaintenanceBar from "../components/MaintenanceBar";
 import BasicTable from "../components/BasicTable";
 import RefillModal from "../components/RefillModal";
 
+interface MyData {
+    'Maintenance.Counter'?: number|0; // Replace 'number' with the actual type if known
+    [key: string]: any;
+}
 const Home: NextPage = () => {
-    const [data, setData] = useState({});
+    const [data, setData] = useState<MyData>({});
     const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
-    const [openRefill, setRefill] = useState(true);
+    const [openRefill, setRefill] = useState(false);
+    const counter : number | undefined = data['Maintenance.Counter'];
 
     useEffect(() => {
         const eventSource = new EventSource('/sse/stream');
@@ -37,13 +42,15 @@ const Home: NextPage = () => {
             eventSource.close();
         };
     }, []);
-    console.log(nodeData)
+    //console.log(nodeData)
 
-    /*useEffect(()=>{
-        if(data){
+    console.log("counter" + counter)
+
+    useEffect(()=>{
+        if(counter && counter < 0){
             setRefill(true)
         }
-    })*/
+    },[counter])
 
     const startMaintenance = async () => {
         try {

@@ -20,6 +20,12 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 export default function InventoryContainer({data}: {data: any}) {
     //console.log(data);
 
+    const Yeast = data['Inventory.Yeast'];
+    const Wheat = data['Inventory.Wheat'];
+    const Malt = data['Inventory.Malt'];
+    const Hops = data['Inventory.Hops'];
+    const Barley = data['Inventory.Barley'];
+
     const [progressYeast, setProgressYeast] = useState(0);
     const [progressWheat, setProgressWheat] = useState(0);
     const [progressMalt, setProgressMalt] = useState(0);
@@ -27,11 +33,11 @@ export default function InventoryContainer({data}: {data: any}) {
     const [progressBarley, setProgressBarley] = useState(0);
 
     useEffect(()=> {
-        setProgressYeast(data.inventoryYeast/35000*100);
-        setProgressWheat(data.inventoryWheat/35000*100);
-        setProgressMalt(data.inventoryMalt/35000*100);
-        setProgressHops(data.inventoryHops/35000*100);
-        setProgressBarley(data.inventoryBarley/35000*100);
+        setProgressYeast(Yeast/35000*100);
+        setProgressWheat(Wheat/35000*100);
+        setProgressMalt(Malt/35000*100);
+        setProgressHops(Hops/35000*100);
+        setProgressBarley(Barley/35000*100);
     },[data])
 
     return (

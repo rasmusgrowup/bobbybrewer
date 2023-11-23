@@ -4,10 +4,10 @@ export default function StatusContainer({data}) {
     let content;
    // console.log("StatusContainer: " + data)
     const stateCurrentValue = data['Cube.Status.StateCurrent'];
-    //console.log(stateCurrentValue);
+    console.log("Current State" + stateCurrentValue);
 
     switch (stateCurrentValue) {
-        case '6':
+        case 6:
             content = "Brewing";
             break;
         default:

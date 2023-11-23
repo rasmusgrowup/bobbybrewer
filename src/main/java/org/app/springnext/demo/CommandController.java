@@ -8,7 +8,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import java.util.Map;
 
 public class CommandController {
-
+    private SseController sseController;
 
     public void startProduction() {
         try {
@@ -79,7 +79,9 @@ public class CommandController {
 
     public void startRefill(){
         try {
+
             OpcUaClient client = OpcUaClientSingleton.getInstance();
+            SubscriptionManager sm = new SubscriptionManager(sseController);
 
             NodeId nodeCntrlCmd = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
             NodeId nodeCmdChangeRequest = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
@@ -89,14 +91,13 @@ public class CommandController {
             NodeId inventoryHops = new NodeId(6, "::Program:Inventory.Hops");
             NodeId inventoryBarley = new NodeId(6, "::Program:Inventory.Barley");
 
-
             OpcUaUtility.writeValue(client, nodeCntrlCmd,new Variant(0));
             OpcUaUtility.writeValue(client,nodeCmdChangeRequest,new Variant(1));
-            while(Integer.valueOf(OpcUaUtility.readValue(client,inventoryYeast)) < 36000 ||
-                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryWheat)) < 36000 ||
-                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryMalt)) < 36000 ||
-                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryHops)) < 36000 ||
-                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryBarley)) < 36000) {
+            while(Integer.valueOf(OpcUaUtility.readValue(client,inventoryYeast)) < 35000 ||
+                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryWheat)) < 35000 ||
+                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryMalt)) < 35000 ||
+                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryHops)) < 35000 ||
+                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryBarley)) < 35000) {
             }
             OpcUaUtility.writeValue(client, nodeCntrlCmd,new Variant(0));
             OpcUaUtility.writeValue(client,nodeCmdChangeRequest,new Variant(1));

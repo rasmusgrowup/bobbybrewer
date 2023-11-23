@@ -1,5 +1,6 @@
 package org.app.springnext.demo;
 
+import com.sun.jdi.IntegerValue;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
@@ -71,6 +72,34 @@ public class CommandController {
                 Thread.sleep(millisecondsDelay); //Selve delay
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void startRefill(){
+        try {
+            OpcUaClient client = OpcUaClientSingleton.getInstance();
+
+            NodeId nodeCntrlCmd = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
+            NodeId nodeCmdChangeRequest = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
+            NodeId inventoryYeast = new NodeId(6, "::Program:Inventory.Yeast");
+            NodeId inventoryWheat = new NodeId(6, "::Program:Inventory.Wheat");
+            NodeId inventoryMalt = new NodeId(6, "::Program:Inventory.Malt");
+            NodeId inventoryHops = new NodeId(6, "::Program:Inventory.Hops");
+            NodeId inventoryBarley = new NodeId(6, "::Program:Inventory.Barley");
+
+
+            OpcUaUtility.writeValue(client, nodeCntrlCmd,new Variant(0));
+            OpcUaUtility.writeValue(client,nodeCmdChangeRequest,new Variant(1));
+            while(Integer.valueOf(OpcUaUtility.readValue(client,inventoryYeast)) < 36000 ||
+                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryWheat)) < 36000 ||
+                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryMalt)) < 36000 ||
+                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryHops)) < 36000 ||
+                    Integer.valueOf(OpcUaUtility.readValue(client,inventoryBarley)) < 36000) {
+            }
+            OpcUaUtility.writeValue(client, nodeCntrlCmd,new Variant(0));
+            OpcUaUtility.writeValue(client,nodeCmdChangeRequest,new Variant(1));
         } catch (Exception e) {
             e.printStackTrace();
         }

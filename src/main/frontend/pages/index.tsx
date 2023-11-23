@@ -8,10 +8,12 @@ import FormContainer from "../components/FormContainer";
 import SensorContainer from "../components/SensorContainer";
 import MaintenanceBar from "../components/MaintenanceBar";
 import BasicTable from "../components/BasicTable";
+import RefillModal from "../components/RefillModal";
 
 const Home: NextPage = () => {
     const [data, setData] = useState({});
     const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
+    const [openRefill, setRefill] = useState(true);
 
     useEffect(() => {
         const eventSource = new EventSource('/sse/stream');
@@ -36,6 +38,12 @@ const Home: NextPage = () => {
         };
     }, []);
     console.log(nodeData)
+
+    /*useEffect(()=>{
+        if(data){
+            setRefill(true)
+        }
+    })*/
 
     const startMaintenance = async () => {
         try {
@@ -74,6 +82,7 @@ const Home: NextPage = () => {
                     <MaintenanceBar data={data}/>
                     <BasicTable />
                 </div>
+                {openRefill && <RefillModal closeRefill={() => setRefill(false)} />}
             </main>
         </>
     )

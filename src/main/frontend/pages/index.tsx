@@ -8,10 +8,14 @@ import FormContainer from "../components/FormContainer";
 import SensorContainer from "../components/SensorContainer";
 import MaintenanceBar from "../components/MaintenanceBar";
 import BasicTable from "../components/BasicTable";
+interface MyData {
+    'Maintenance.Counter'?: number; // Replace 'number' with the actual type if known
+    [key: string]: any;
+}
 
 const Home: NextPage = () => {
-    const [data, setData] = useState({});
-    const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
+    const [data, setData] = useState<MyData>({});
+    const counter = data['Maintenance.Counter'];
 
     useEffect(() => {
         const eventSource = new EventSource('/sse/stream');
@@ -35,7 +39,12 @@ const Home: NextPage = () => {
             eventSource.close();
         };
     }, []);
-    console.log(nodeData)
+
+    useEffect(() => {
+        if (counter && counter > 8000) {
+
+        }
+    }, []);
 
     const startMaintenance = async () => {
         try {

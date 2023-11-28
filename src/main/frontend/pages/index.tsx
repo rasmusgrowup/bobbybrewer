@@ -47,7 +47,7 @@ const Home: NextPage = () => {
     console.log("counter" + counter)
 
     useEffect(()=>{
-        if(data['Cube.Status.StateCurrent'] == 11){
+        if(data['Cube.Status.StateCurrent'] == 11 /* && data['Cube.Admin.StopReason.Id'] == 10 */){
             setRefill(true)
         }
     },[data['Cube.Status.StateCurrent']]);

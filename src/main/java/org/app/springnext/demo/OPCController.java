@@ -83,7 +83,7 @@ public class OPCController implements IOPCController {
         boolean is_reset = false;
         CommandController commandController = new CommandController();
         commandController.resetCommand();
-        while (!is_reset){
+        while (!is_reset) {
             is_reset = OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")).equals("4");
             //System.out.println(OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")));
         }
@@ -98,5 +98,12 @@ public class OPCController implements IOPCController {
     public void cancelProduction() {
         CommandController commandController = new CommandController();
         commandController.cancelProduction();
+    }
+
+    @PostMapping("/refill")
+    public void startRefill() {
+        CommandController commandController = new CommandController();
+        //commandController.startRefill();
+        System.out.println("Refill: Great Success!");
     }
 }

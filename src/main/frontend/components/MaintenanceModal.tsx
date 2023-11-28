@@ -2,19 +2,20 @@ import {Button} from "@mui/material";
 import styles from '../styles/Refill.module.css'
 import {useState} from "react";
 
-export default function RefillModal({closeRefill}: {closeRefill: () => void}){
-    const [refillPressed, setRefillPressed] = useState(false);
 
-    const handleRefill = async () => {
+export default function MaintenanceModal({closeMaintenance}: {closeMaintenance: () => void}){
+    const [maintenancePressed, setMaintenancePressed] = useState(false);
+
+    const handleMaintenance = async () => {
         try {
-            const response = await fetch('/api/startRefill', {
+            const response = await fetch('/api/startMaintenance', {
                 method: 'POST',
             });
 
             if (response.ok) {
                 // Handle success, if needed
                 console.log("Refill function called")
-                setRefillPressed(true)
+                setMaintenancePressed(true)
             } else {
                 // Handle errors
                 console.error('Failed to refill');
@@ -28,22 +29,20 @@ export default function RefillModal({closeRefill}: {closeRefill: () => void}){
         <div className={styles.refillBackground}>
             <div className={styles.refillContainer}>
                 <div className={styles.title}>
-                    <h1>Refill Required</h1>
+                    <h1>Maintenance Required</h1>
                 </div>
                 <div className={styles.body}>
-                    <p>Brewer is out of ingredients</p>
+                    <p>Machine is in need of maintenance.</p>
                 </div>
                 <div className={styles.footer}>
                     <Button className={styles.button}
                             variant={"contained"}
-                            onClick={() => handleRefill()}
-                            disabled={refillPressed}>Refill</Button>
+                            disabled={maintenancePressed}>Start</Button>
 
                     <Button className={styles.button}
                             variant={"contained"}
-                            onClick={closeRefill}
-                            disabled={!refillPressed}>Exit</Button>
-
+                            onClick={closeMaintenance}
+                            disabled={!maintenancePressed}>Exit</Button>
                 </div>
             </div>
         </div>

@@ -93,8 +93,8 @@ export default function FormContainer({data}: {data: any}) {
                 <div className={styles.column}>
                     <RadioGroup
                         onChange={handleBeerChange}
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue="0"
+                        value={beerType}
+                        aria-labelledby="demo-radio-buttons-group-label" defaultValue="0"
                         name="radio-buttons-group">
                         <FormControlLabel value="0" control={<Radio className={styles['custom-radio']}/>}
                                           label="Pilsner"/>

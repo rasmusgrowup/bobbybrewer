@@ -14,6 +14,7 @@ interface MyData {
     'Maintenance.Counter'?: number|0;
     [key: string]: any;
 }
+
 const Home: NextPage = () => {
     const [data, setData] = useState<MyData>({});
     const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
@@ -42,9 +43,6 @@ const Home: NextPage = () => {
             eventSource.close();
         };
     }, []);
-    //console.log(nodeData)
-
-    console.log("counter" + counter)
 
     useEffect(()=>{
         if(data['Cube.Status.StateCurrent'] == 11 /* && data['Cube.Admin.StopReason.Id'] == 10 */){

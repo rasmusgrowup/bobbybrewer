@@ -11,7 +11,7 @@ import BasicTable from "../components/BasicTable";
 import RefillModal from "../components/RefillModal";
 
 interface MyData {
-    'Maintenance.Counter'?: number|0; // Replace 'number' with the actual type if known
+    'Maintenance.Counter'?: number|0;
     [key: string]: any;
 }
 const Home: NextPage = () => {

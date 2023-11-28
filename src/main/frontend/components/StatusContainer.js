@@ -10,17 +10,29 @@ export default function StatusContainer({data}) {
         case 1:
             content = "Clearing"
             break;
+        case 2:
+            content = "Stopped";
+            break;
         case 3:
             content = "Starting"
             break;
         case 4:
             content = "Idle"
             break;
+        case 5:
+            content = "Suspended";
+            break;
         case 6:
             content = "Brewing";
             break;
         case 7:
             content = "Stopping"
+            break;
+        case 8:
+            content = "Aborting";
+            break;
+        case 9:
+            content = "Aborted";
             break;
         case 10:
             content = "Holding"
@@ -37,8 +49,14 @@ export default function StatusContainer({data}) {
         case 17:
             content = "Batch Complete"
             break;
+        case 18:
+            content = "Deactivating";
+            break;
+        case 19:
+            content = "Activating";
+            break;
         default:
-            content = "Stopped";
+            content = "NaN";
     }
 
     return (

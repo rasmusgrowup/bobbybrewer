@@ -45,10 +45,10 @@ public class SubscriptionManager {
         this.sseController = sseController;
     }
 
-    public CompletableFuture<Void> run(OpcUaClient client, NodeId nodeId) throws Exception {
+    public CompletableFuture<Void> run(NodeId nodeId) throws Exception {
         // synchronous connect
         CompletableFuture<Void> future = new CompletableFuture<>();
-        client = OpcUaClientSingleton.getInstance();
+        OpcUaClient client = OpcUaClientSingleton.getInstance();
 
         // create a subscription @ 1000ms
         UaSubscription subscription = client.getSubscriptionManager().createSubscription(1000.0).get();

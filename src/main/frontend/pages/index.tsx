@@ -8,14 +8,18 @@ import FormContainer from "../components/FormContainer";
 import SensorContainer from "../components/SensorContainer";
 import MaintenanceBar from "../components/MaintenanceBar";
 import BasicTable from "../components/BasicTable";
+import RefillModal from "../components/RefillModal";
+
 interface MyData {
-    'Maintenance.Counter'?: number; // Replace 'number' with the actual type if known
+    'Maintenance.Counter'?: number|0;
     [key: string]: any;
 }
 
 const Home: NextPage = () => {
     const [data, setData] = useState<MyData>({});
-    const counter = data['Maintenance.Counter'];
+    const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
+    const [openRefill, setRefill] = useState(false);
+    const counter : number | undefined = data['Maintenance.Counter'];
 
     useEffect(() => {
         const eventSource = new EventSource('/sse/stream');
@@ -40,11 +44,11 @@ const Home: NextPage = () => {
         };
     }, []);
 
-    useEffect(() => {
-        if (counter && counter > 8000) {
-
+    useEffect(()=>{
+        if(data['Cube.Status.StateCurrent'] == 11 /* && data['Cube.Admin.StopReason.Id'] == 10 */){
+            setRefill(true)
         }
-    }, []);
+    },[data['Cube.Status.StateCurrent']]);
 
     const startMaintenance = async () => {
         try {
@@ -83,6 +87,7 @@ const Home: NextPage = () => {
                     <MaintenanceBar data={data}/>
                     <BasicTable />
                 </div>
+                {openRefill && <RefillModal closeRefill={() => setRefill(false)} />}
             </main>
         </>
     )

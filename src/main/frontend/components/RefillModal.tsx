@@ -7,7 +7,7 @@ export default function RefillModal({closeRefill}: {closeRefill: () => void}){
 
     const handleRefill = async () => {
         try {
-            const response = await fetch('/api/startRefill', {
+            const response = await fetch('/api/start_refill', {
                 method: 'POST',
             });
 

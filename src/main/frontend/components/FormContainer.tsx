@@ -128,9 +128,11 @@ export default function FormContainer({data}: {data: any}) {
                         onChange={(_, newValue: any) => setSpeed(newValue)}
                     />
                     <Button className={styles.formButton} type="submit" variant={"contained"}
-                            onClick={() => handleStartProduction()} disabled={data.stateCurrent == 6}>Start</Button>
+                            onClick={() => handleStartProduction()} disabled={data['Cube.Status.StateCurrent'] != 2 &&
+                                                                              data['Cube.Status.StateCurrent'] != 17 &&
+                                                                              data['Cube.Status.StateCurrent'] != null}>Start</Button>
                     <Button className={styles.formButton} type="submit" variant={"contained"}
-                            onClick={() => handleStopProduction()} disabled={data.stateCurrent != 6}>Stop</Button>
+                            onClick={() => handleStopProduction()} disabled={data['Cube.Status.StateCurrent'] != 6}>Stop</Button>
                 </div>
             </div>
         </div>

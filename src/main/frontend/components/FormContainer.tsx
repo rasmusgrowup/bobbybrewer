@@ -7,6 +7,7 @@ export default function FormContainer({data}: {data: any}) {
     const [amount, setAmount] = useState(100);
     const [speed, setSpeed] = useState(30);
     const [beerType, setBeerType] = useState(0);
+    const [maxSpeed,setMaxSpeed] = useState(600);
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
         try {
@@ -54,14 +55,47 @@ export default function FormContainer({data}: {data: any}) {
         }
     };
 
+    const handleBeerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedBeer = parseInt(event.target.value);
+        setBeerType(selectedBeer);
+
+        let newMaxSpeed = 0;
+        switch (selectedBeer) {
+            case 0: //Pilsner
+                newMaxSpeed = 600;
+                break;
+            case 1: //Wheat
+                newMaxSpeed = 300;
+                break;
+            case 2: // IPA
+                newMaxSpeed = 150;
+                break;
+            case 3: // Stout
+                newMaxSpeed = 200;
+                break;
+            case 4: // Ale
+                newMaxSpeed = 100;
+                break;
+            case 5: // AlcoholFree
+                newMaxSpeed = 120;
+                break;
+        }
+        setMaxSpeed(newMaxSpeed);
+        if(speed > newMaxSpeed){
+            setSpeed(newMaxSpeed);
+        }
+    }
+
     return (
         <div className={styles.formContainer}>
             {/* <header className={styles.formHeader}>Production Settings</header> */}
             <div className={styles.form}>
                 <div className={styles.column}>
-                    <RadioGroup onChange={(event, val: any) => setBeerType(val)} value={beerType}
-                                aria-labelledby="demo-radio-buttons-group-label" defaultValue="pilsner"
-                                name="radio-buttons-group">
+                    <RadioGroup
+                        onChange={handleBeerChange}
+                        value={beerType}
+                        aria-labelledby="demo-radio-buttons-group-label" defaultValue="0"
+                        name="radio-buttons-group">
                         <FormControlLabel value="0" control={<Radio className={styles['custom-radio']}/>}
                                           label="Pilsner"/>
                         <FormControlLabel value="1" control={<Radio className={styles['custom-radio']}/>}
@@ -90,11 +124,13 @@ export default function FormContainer({data}: {data: any}) {
                         step={10}
                         marks
                         min={0}
-                        max={100}
+                        max={maxSpeed}
                         onChange={(_, newValue: any) => setSpeed(newValue)}
                     />
                     <Button className={styles.formButton} type="submit" variant={"contained"}
-                            onClick={() => handleStartProduction()} disabled={data['Cube.Status.StateCurrent'] == 6}>Start</Button>
+                            onClick={() => handleStartProduction()} disabled={data['Cube.Status.StateCurrent'] != 2 &&
+                                                                              data['Cube.Status.StateCurrent'] != 17 &&
+                                                                              data['Cube.Status.StateCurrent'] != null}>Start</Button>
                     <Button className={styles.formButton} type="submit" variant={"contained"}
                             onClick={() => handleStopProduction()} disabled={data['Cube.Status.StateCurrent'] != 6}>Stop</Button>
                 </div>

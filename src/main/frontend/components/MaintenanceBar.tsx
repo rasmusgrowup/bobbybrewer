@@ -22,7 +22,7 @@ export default function MaintenanceBar({data}: {data: any}) {
     const [maintenance, setMaintenance] = useState(0);
 
     useEffect(()=> {
-        setMaintenance(counter/65535*100);
+        setMaintenance(counter/30000*100);
     },[data])
 
     return (

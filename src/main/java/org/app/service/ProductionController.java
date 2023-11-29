@@ -1,12 +1,8 @@
-package org.app.springnext.demo;
+package org.app.service;
 
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
-import org.eclipse.milo.opcua.stack.core.UaException;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
-
-import java.sql.SQLOutput;
-import java.util.concurrent.ExecutionException;
 
 public class ProductionController {
     static void startProduction()

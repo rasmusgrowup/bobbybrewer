@@ -1,13 +1,9 @@
-package org.app.springnext.demo;
+package org.app.service;
 
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
-import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
-import org.eclipse.milo.opcua.stack.core.types.enumerated.TimestampsToReturn;
 
-import java.util.concurrent.ExecutionException;
-
-import static org.app.springnext.demo.OpcUaUtility.readValue;
+import static org.app.service.OpcUaUtility.readValue;
 
 public class Sensors {
 

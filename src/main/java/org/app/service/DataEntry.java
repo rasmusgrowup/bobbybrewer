@@ -1,4 +1,4 @@
-package org.app.springnext.demo;
+package org.app.service;
 
 public record DataEntry(String payload) {
 }

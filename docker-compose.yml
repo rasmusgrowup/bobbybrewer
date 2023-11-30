@@ -31,6 +31,16 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - db-data:/var/lib/mysql
 
+  frontend:
+    build: ./src/main/frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - springapimysql-net
+    depends_on:
+      - api_service
+
 networks:
   springapimysql-net:
 

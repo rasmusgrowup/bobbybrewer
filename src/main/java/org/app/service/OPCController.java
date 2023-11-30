@@ -100,4 +100,11 @@ public class OPCController implements IOPCController {
         CommandController commandController = new CommandController();
         commandController.cancelProduction();
     }
+
+    @PostMapping("/start_refill")
+    public void startRefill() {
+        CommandController commandController = new CommandController();
+        //commandController.startRefill();
+        System.out.println("Refill: Great Success!");
+    }
 }

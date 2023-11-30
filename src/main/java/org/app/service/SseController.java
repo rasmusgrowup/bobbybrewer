@@ -19,7 +19,7 @@ import java.io.IOException;
 public class SseController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final SseEmitter sseEmitter = new SseEmitter();
+    private final SseEmitter sseEmitter = new SseEmitter(0L);
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter stream() throws IOException {

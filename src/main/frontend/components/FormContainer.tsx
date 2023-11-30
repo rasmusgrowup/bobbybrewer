@@ -10,6 +10,16 @@ export default function FormContainer({data}: {data: any}) {
     const [maxSpeed,setMaxSpeed] = useState(600);
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
+        const maintenanceCounter = parseFloat(String(data['Maintenance.Counter'])); // Sikre at data.maintenanceCounter et tal
+        const inputAmount = amount; //Sætter amount til inputAmount
+        const maintenanceTotal = maintenanceCounter + inputAmount; //Lægger counter og amount sammen
+        //Tjekker om det overgår 36000
+        if (maintenanceTotal >= 36000) {
+            // Vha. alert vis besked omkring maintenance
+            alert("Maintenance will be required midway with current amount in input! Please initiate maintenance, if you wish to produce this many.");
+            return;
+        }
+
         try {
             const response = await fetch('/api/start_production', {
                 method: 'POST',

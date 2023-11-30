@@ -27,12 +27,6 @@ services:
       - MYSQL_USER=bobbybrewer
       - MYSQL_PASSWORD=bobby_pw
       - MYSQL_ROOT_PASSWORD=bobby_rpw
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - db-data:/var/lib/mysql
 
 networks:
   springapimysql-net:
-
-volumes:
-  db-data:

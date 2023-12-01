@@ -1,4 +1,4 @@
-package org.app.springnext.demo;
+package org.app.service;
 
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.*;

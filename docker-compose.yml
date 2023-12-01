@@ -1,0 +1,29 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: src/main/backend/org/app/DockerfileDockerfile  # Assuming the Dockerfile is in the root of your project
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: .
+      dockerfile: src/main/frontend/Dockerfile  # Adjust the path accordingly
+    ports:
+      - "3000:3000"
+
+  database:
+    build:
+      context: .
+      dockerfile: src/main/database/Dockerfile  # Assuming the Dockerfile is in the root of your project
+    ports:
+      - "3307:3306"  # Map container port 3306 to host port 3307
+    environment:
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+      MYSQL_ROOT_PASSWORD: myrootpassword

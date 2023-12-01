@@ -1,4 +1,4 @@
-package org.app.springnext.demo;
+package org.app.service;
 
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ public class OpcUaClientSingleton {
 
     public static synchronized OpcUaClient getInstance() throws Exception {
         if (instance == null) {
-            instance = OpcUaClient.create(ENDPOINT_URL);
+            instance = OpcUaClient.create(TEST_ENDPOINT_URL);
             instance.connect().get();
         }
         return instance;

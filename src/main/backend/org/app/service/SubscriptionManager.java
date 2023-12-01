@@ -1,4 +1,4 @@
-package org.app.springnext.demo;
+package org.app.service;
 
 /*
  * Copyright (c) 2019 the Eclipse Milo Authors

@@ -10,9 +10,72 @@ export default function FormContainer({data}: {data: any}) {
     const [maxSpeed,setMaxSpeed] = useState(600);
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
+        const barleyCounter = parseFloat(String(data['Inventory.Barley']))
+        const hopsCounter = parseFloat(String(data['Inventory.Hops']))
+        const maltCounter = parseFloat(String(data['Inventory.Malt']))
+        const wheatCounter = parseFloat(String(data['Inventory.Wheat']))
+        const yeastCounter = parseFloat(String(data['Inventory.Yeast']))
+
+        switch (beerType) {
+            case 0: // Pilsner
+                if (4*amount >= barleyCounter
+                    || 2*amount >= hopsCounter
+                    || amount >= maltCounter
+                    || amount >= wheatCounter
+                    || 4*amount >= yeastCounter) {
+                    alert("The ingredients have to be refilled to produce" + amount + "beers.")
+                    return;
+                }
+            case 1: // Wheat
+                if (amount >= barleyCounter
+                    || 4*amount >= hopsCounter
+                    || amount >= maltCounter
+                    || 6*amount >= wheatCounter
+                    || 3*amount >= yeastCounter) {
+                    alert("The ingredients have to be refilled to produce" + amount + "beers.")
+                    return;
+                }
+            case 2: // IPA
+                if (4*amount >= barleyCounter
+                    || amount >= hopsCounter
+                    || 5*amount >= maltCounter
+                    || 2*amount >= wheatCounter
+                    || amount >= yeastCounter) {
+                    alert("The ingredients have to be refilled to produce" + amount + "beers.")
+                    return;
+                }
+            case 3: // Stout
+                if (3*amount >= barleyCounter
+                    || 4*amount >= hopsCounter
+                    || 6*amount >= maltCounter
+                    || amount >= wheatCounter
+                    || 2*amount >= yeastCounter) {
+                    alert("The ingredients have to be refilled to produce" + amount + "beers.")
+                    return;
+                }
+            case 4: // Ale
+                if (4*amount >= barleyCounter
+                    || 6*amount >= hopsCounter
+                    || 2*amount >= maltCounter
+                    || 2*amount >= wheatCounter
+                    || 8*amount >= yeastCounter) {
+                    alert("The ingredients have to be refilled to produce" + amount + "beers.")
+                    return;
+                }
+            case 5: // Alcohol-Free
+                if (amount >= barleyCounter
+                    || amount >= hopsCounter
+                    || 4*amount >= maltCounter
+                    || 5*amount >= wheatCounter) {
+                    alert("The ingredients have to be refilled to produce" + amount + "beers.")
+                    return;
+                }
+        }
         const maintenanceCounter = parseFloat(String(data['Maintenance.Counter'])); // Sikre at data.maintenanceCounter et tal
-        const inputAmount = amount; //Sætter amount til inputAmount
-        const maintenanceTotal = maintenanceCounter + inputAmount; //Lægger counter og amount sammen
+        //const inputAmount = amount; //Sætter amount til inputAmount
+        const maintenanceTotal = maintenanceCounter + amount; //Lægger counter og amount sammen
+
+
         //Tjekker om det overgår 36000
         if (maintenanceTotal >= 36000) {
             // Vha. alert vis besked omkring maintenance

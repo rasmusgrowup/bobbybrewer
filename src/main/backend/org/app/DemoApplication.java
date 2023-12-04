@@ -1,6 +1,6 @@
 package org.app;
 
-import org.app.service.SseController;
+import org.app.api.SseController;
 import org.app.service.SubscriptionManager;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -22,6 +22,29 @@ const Home: NextPage = () => {
     const counter : number | undefined = data['Maintenance.Counter'];
 
     useEffect(() => {
+        const fetchData = () => {
+            fetch('/api/read-current-state')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    setData(data); // Assuming your JSON structure includes a "payload" property
+                })
+                .catch(error => {
+                    setData(error.toString());
+                    console.error('An error occurred:', error);
+                });
+        };
+        // Call the function once immediately, then set the interval
+        fetchData();
+        //console.log(data);
+        // Cleanup function to clear the interval when the component unmounts
+    }, []);
+
+    useEffect(() => {
         const eventSource = new EventSource('/sse/stream');
 
         eventSource.onmessage = (event) => {
@@ -39,13 +62,14 @@ const Home: NextPage = () => {
                 [propertyName]: value,
             }));
         };
+
         return () => {
             eventSource.close();
         };
     }, []);
 
     useEffect(()=>{
-        if(data['Cube.Status.StateCurrent'] == 11 /* && data['Cube.Admin.StopReason.Id'] == 10 */){
+        if(data['Cube.Status.StateCurrent'] == 11 && data['Cube.Admin.StopReason.Id'] == 10 ){
             setRefill(true)
         }
     },[data['Cube.Status.StateCurrent']]);

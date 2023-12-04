@@ -1,4 +1,4 @@
-package org.app.springnext.demo;
+package org.app.service;
 
 import org.springframework.web.bind.annotation.RequestBody;
 

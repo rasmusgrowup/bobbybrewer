@@ -1,4 +1,4 @@
-package org.app.springnext.demo;
+package org.app.service;
 
 /*
  * Copyright (c) 2019 the Eclipse Milo Authors
@@ -12,6 +12,8 @@ package org.app.springnext.demo;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import org.app.api.SseController;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaMonitoredItem;

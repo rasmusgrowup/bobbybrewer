@@ -1,4 +1,4 @@
-package org.app.springnext.demo;
+package org.app.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -17,12 +17,9 @@ interface MyData {
 
 const Home: NextPage = () => {
     const [data, setData] = useState<MyData>({});
-    const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
     const [openRefill, setRefill] = useState(false);
-    const counter : number | undefined = data['Maintenance.Counter'];
     const [amountFromChild, setAmountFromChild] = useState(0);
 
-    // Function to handle the amount change from the child component
     const handleAmountChange = (amount: number) => {
         setAmountFromChild(amount);
     };
@@ -37,16 +34,28 @@ const Home: NextPage = () => {
                     return res.json();
                 })
                 .then(data => {
-                    setData(data); // Assuming your JSON structure includes a "payload" property
+                    // Assuming data structure needs to be { nodeId: '...', value: ... }
+                    const { nodeId, value } = data;
+
+                    // Split the string by colons and select the parts that represent the property
+                    const parts = nodeId.split(':');
+                    const propertyName = parts.slice(3).join(''); // This will join the parts after "s="
+
+                    // Update the state with the new value
+                    setData(prevData => ({
+                        ...prevData,
+                        [propertyName]: value,
+                    }));
                 })
                 .catch(error => {
-                    setData(error.toString());
+                    setData({ error: error.toString() }); // Update state with an error message if needed
                     console.error('An error occurred:', error);
                 });
         };
+
         // Call the function once immediately, then set the interval
         fetchData();
-        //console.log(data);
+
         // Cleanup function to clear the interval when the component unmounts
     }, []);
 

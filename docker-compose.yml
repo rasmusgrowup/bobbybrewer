@@ -1,0 +1,18 @@
+version: '3'
+services:
+    mysqldb:
+        image: "mysql:latest"
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: beerprod
+            MYSQL_USER: bobbybrewer
+            MYSQL_PASSWORD: bobby_pw
+            MYSQL_ROOT_PASSWORD: bobby_rpw
+        volumes:
+            - ./src/main/database/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+    init.sql:
+

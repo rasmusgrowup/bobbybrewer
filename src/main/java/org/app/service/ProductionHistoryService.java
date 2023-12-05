@@ -1,4 +1,3 @@
-/*
 package org.app.service;
 
 import org.app.persistence.ProductionHistory;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@Service
+@Service
 public class ProductionHistoryService {
 
     private final ProductionHistoryRepository productionHistoryRepository;
@@ -34,4 +33,5 @@ public class ProductionHistoryService {
         productionHistoryRepository.deleteById(id);
     }
 }
-*/
+
+

@@ -109,7 +109,7 @@ const Home: NextPage = () => {
                     <StatusContainer data={data}/>
                     <SensorContainer data={data}/>
                     <MaintenanceBar data={data}/>
-                    <BasicTable />
+                    <BasicTable data={data}/>
                 </div>
                 {openRefill && <RefillModal closeRefill={() => setRefill(false)} />}
             </main>

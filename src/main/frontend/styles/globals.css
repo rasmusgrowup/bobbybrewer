@@ -19,6 +19,9 @@ a {
 
 :root {
   --background-color: rgb(13, 18, 38);
+  --background-lighter: rgb(22, 27, 47);
+  --tab-active: rgb(22, 27, 47);
+  --tab-inactive: rgb(7, 15, 26);
   --background-color-darker: rgb(5, 10, 23);
   --border-color: rgba(25, 118, 210, 0.5);
   --border-radius: 0.66rem;

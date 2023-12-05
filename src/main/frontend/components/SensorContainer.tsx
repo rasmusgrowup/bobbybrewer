@@ -4,9 +4,9 @@ import WaterDropIcon from '@mui/icons-material/WaterDropOutlined';
 import SensorsIcon from '@mui/icons-material/SensorsOutlined';
 
 export default function SensorContainer({data}: {data: any}) {
-    const temperature = data['Status.Parameter[2].Value'];
-    const humidity = data['Status.Parameter[3].Value'];
-    const vibration = data['Status.Parameter[4].Value'];
+    const temperature = data['Cube.Status.Parameter[2].Value'];
+    const humidity = data['Cube.Status.Parameter[3].Value'];
+    const vibration = data['Cube.Status.Parameter[4].Value'];
     console.log(data);
 
     return (

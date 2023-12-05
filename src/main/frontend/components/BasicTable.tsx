@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from '../styles/Home.module.css'
 import {useEffect, useState} from "react";
 import ChartContainer from "./ChartContainer";
-import {Box, LinearProgress} from "@mui/material";
+import {Box, LinearProgress, LinearProgressProps, Typography} from "@mui/material";
 
 function createData(
     name: string,
@@ -46,6 +46,21 @@ function History() {
     )
 }
 
+function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ width: '500px', mr: 1, }}>
+                <LinearProgress color={"secondary"} variant="determinate" {...props} />
+            </Box>
+            <Box sx={{ minWidth: 35 }}>
+                <Typography variant="body2">{`${Math.round(
+                    props.value,
+                )}%`}</Typography>
+            </Box>
+        </Box>
+    );
+}
+
 function Ongoing({ data, amount }: { data: any; amount: number }) {
     const [progress, setProgress] = useState(0);
     const processed = data['Cube.Admin.ProdProcessedCount'];
@@ -60,7 +75,7 @@ function Ongoing({ data, amount }: { data: any; amount: number }) {
             <div className={styles.ongoingInfo}>
                 <div className={styles.ongoingItem}>
                     <p>Amount</p>
-                    <div className={styles.sensorData}>{amount ? `${amount}°` : '0'}</div>
+                    <div className={styles.sensorData}>{amount ? `${amount}` : '0'}</div>
                 </div>
                 <div className={styles.ongoingItem}>
                     <p>Produced</p>
@@ -78,7 +93,7 @@ function Ongoing({ data, amount }: { data: any; amount: number }) {
             <div className={styles.lineChart}>
                 <p>Progress</p>
                 <Box sx={{ width: '100%' }}>
-                    <LinearProgress variant="determinate" value={progress} />
+                    <LinearProgressWithLabel value={progress}/>
                 </Box>
             </div>
         </div>

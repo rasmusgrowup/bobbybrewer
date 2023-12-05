@@ -64,15 +64,15 @@ function Ongoing({ data, amount }: { data: any; amount: number }) {
                 </div>
                 <div className={styles.ongoingItem}>
                     <p>Produced</p>
-                    <div className={styles.sensorData}>{processed ? `${processed}°` : '0'}</div>
+                    <div className={styles.sensorData}>{processed ? `${processed}` : '0'}</div>
                 </div>
                 <div className={styles.ongoingItem}>
                     <p>Good</p>
-                    <div className={styles.sensorData}>{processed ? `${processed - defective}°` : '0'}</div>
+                    <div className={styles.sensorData}>{processed ? `${processed - defective}` : '0'}</div>
                 </div>
                 <div className={styles.ongoingItem}>
                     <p>Defective</p>
-                    <div className={styles.sensorData}>{defective ? `${defective}°` : '0'}</div>
+                    <div className={styles.sensorData}>{defective ? `${defective}` : '0'}</div>
                 </div>
             </div>
             <div className={styles.lineChart}>

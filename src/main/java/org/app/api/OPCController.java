@@ -1,10 +1,7 @@
 package org.app.api;
 
-//import org.app.persistence.ProductionHistory;
-import org.app.service.CommandController;
-import org.app.service.IOPCController;
-import org.app.service.OpcUaClientSingleton;
-import org.app.service.OpcUaUtility;
+import org.app.persistence.ProductionHistory;
+import org.app.service.*;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +14,12 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = "/api")
 public class OPCController implements IOPCController {
-    /*private final ProductionHistoryService productionHistoryService;
+    private final ProductionHistoryService productionHistoryService;
 
     @Autowired
     public OPCController(ProductionHistoryService productionHistoryService) {
         this.productionHistoryService = productionHistoryService;
-    }*/
+    }
 
     @Override
     @GetMapping("/read-current-state")
@@ -109,6 +106,7 @@ public class OPCController implements IOPCController {
         float beerType = requestBody.get("beerType");
         float amountCount = requestBody.get("amount");
         float machSpeed = requestBody.get("speed");
+        productionHistoryService.saveProductionData(beerType, amountCount, machSpeed);
         /*ph.setBeerType(beerType);
         ph.setAmountCount(amountCount);
         ph.setMachSpeed(machSpeed);

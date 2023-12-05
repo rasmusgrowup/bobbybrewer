@@ -85,7 +85,7 @@ function Ongoing({ data, amount }: { data: any; amount: number }) {
     )
 }
 
-export default function BasicTable({data}: { data: any }, { amount }: { amount: number }) {
+export default function BasicTable({ data, amount }: { data: any; amount: number }) {
     const [tab, setTab] = useState(0);
 
     return (

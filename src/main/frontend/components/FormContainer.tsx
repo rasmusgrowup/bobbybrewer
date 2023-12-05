@@ -3,7 +3,7 @@ import {Unstable_NumberInput as NumberInput} from '@mui/base/Unstable_NumberInpu
 import styles from '../styles/Home.module.css'
 import {useState} from "react";
 
-export default function FormContainer({data}: {data: any}) {
+export default function FormContainer({ data, onAmountChange }: { data: any, onAmountChange: (amount: number) => void }) {
     const [amount, setAmount] = useState(100);
     const [speed, setSpeed] = useState(30);
     const [beerType, setBeerType] = useState(0);
@@ -112,6 +112,8 @@ export default function FormContainer({data}: {data: any}) {
         } catch (error) {
             console.error('Error:', error);
         }
+
+        onAmountChange(amount);
     };
 
 

@@ -20,6 +20,12 @@ const Home: NextPage = () => {
     const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
     const [openRefill, setRefill] = useState(false);
     const counter : number | undefined = data['Maintenance.Counter'];
+    const [amountFromChild, setAmountFromChild] = useState(0);
+
+    // Function to handle the amount change from the child component
+    const handleAmountChange = (amount: number) => {
+        setAmountFromChild(amount);
+    };
 
     useEffect(() => {
         const fetchData = () => {
@@ -104,12 +110,12 @@ const Home: NextPage = () => {
                     <img className={styles.beerLogo} src="/indexlogo.png" alt="beer"/>
                 </div>
                 <div className={styles.dashboard}>
-                    <FormContainer data={data}/>
+                    <FormContainer data={data} onAmountChange={handleAmountChange}/>
                     <InventoryContainer data={data}/>
                     <StatusContainer data={data}/>
                     <SensorContainer data={data}/>
                     <MaintenanceBar data={data}/>
-                    <BasicTable data={data}/>
+                    <BasicTable data={data} amount={amountFromChild}/>
                 </div>
                 {openRefill && <RefillModal closeRefill={() => setRefill(false)} />}
             </main>

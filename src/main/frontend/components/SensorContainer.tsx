@@ -16,17 +16,17 @@ export default function SensorContainer({data}: {data: any}) {
                 <div className={styles.sensorItem}>
                     <ThermostatIcon sx={{color: 'var(--main-accent)'}} fontSize={"medium"}/>
                     <p>Temperature</p>
-                    <div className={styles.sensorData}>{temperature ? `${temperature}°` : 'NaN'}</div>
+                    <div className={styles.sensorData}>{temperature ? `${temperature}°` : temperature === 0 ? '0' : 'NaN'}</div>
                 </div>
                 <div className={styles.sensorItem}>
                     <WaterDropIcon sx={{color: 'var(--main-accent)'}} fontSize={"medium"}/>
                     <p>Humidity</p>
-                    <div className={styles.sensorData}>{humidity ? `${humidity}%` : 'NaN'}</div>
+                    <div className={styles.sensorData}>{humidity ? `${humidity}%` : humidity === 0 ? '0' : 'NaN'}</div>
                 </div>
                 <div className={styles.sensorItem}>
                     <SensorsIcon sx={{color: 'var(--main-accent)'}} fontSize={"medium"}/>
                     <p>Vibration</p>
-                    <div className={styles.sensorData}>{vibration ? `≈ ${vibration}` : 'NaN'}</div>
+                    <div className={styles.sensorData}>{vibration ? `≈ ${vibration}` : vibration === 0 ? '0' : 'NaN'}</div>
                 </div>
             </div>
         </div>

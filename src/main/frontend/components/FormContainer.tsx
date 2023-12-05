@@ -11,7 +11,7 @@ export default function FormContainer({ data, onAmountChange }: { data: any, onA
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
         // We say + 50 on the counters to ensure the machine never get into a deadlock
-        const barleyCounter = 50+parseFloat(String(data['Inventory.Barley']))
+     /*   const barleyCounter = 50+parseFloat(String(data['Inventory.Barley']))
         const hopsCounter = 50+parseFloat(String(data['Inventory.Hops']))
         const maltCounter = 50+parseFloat(String(data['Inventory.Malt']))
         const wheatCounter = 50+parseFloat(String(data['Inventory.Wheat']))
@@ -76,7 +76,7 @@ export default function FormContainer({ data, onAmountChange }: { data: any, onA
                     return;
                 }
                 break;
-        }
+        } */
 
         const maintenanceCounter = parseFloat(String(data['Maintenance.Counter'])); // Sikre at data.maintenanceCounter et tal
         const maintenanceTotal = maintenanceCounter + amount; //Lægger counter og amount sammen

@@ -36,7 +36,7 @@ public class DemoApplication {
 			sm.run(new NodeId(6, "::Program:Cube.Status.Parameter[3].Value"));
 			sm.run(new NodeId(6, "::Program:Cube.Status.Parameter[4].Value"));
 			//Stop reason:
-			sm.run(new NodeId(6, "::Program:Cube.Admin.StopReason.Id"));
+			sm.run(new NodeId(6, "::Program:Cube.Admin.StopReason.ID"));
 		} catch (Exception e) {
 			// Log the exception and handle it appropriately
 			// Notify the frontend about the error

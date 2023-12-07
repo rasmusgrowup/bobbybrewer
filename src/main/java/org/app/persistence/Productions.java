@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
-public class ProductionHistory {
+public class Productions {
 
     @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

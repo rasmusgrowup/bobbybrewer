@@ -1,8 +1,6 @@
 package org.app.service;
 
 import org.app.persistence.*;
-import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaMonitoredItem;
-import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,15 +24,15 @@ public class ProductionHistoryService {
         this.statusCodesRepository = statusCodesRepository;
     }
 
-    public ProductionHistory saveProductionHistory(ProductionHistory productionHistory) {
-        return productionHistoryRepository.save(productionHistory);
+    public void saveProductionHistory(Productions productionHistory) {
+        productionHistoryRepository.save(productionHistory);
     }
 
-    public List<ProductionHistory> getAllProductionHistories() {
+    public List<Productions> getAllProductionHistories() {
         return productionHistoryRepository.findAll();
     }
 
-    public ProductionHistory getProductionHistoryById(Long id) {
+    public Productions getProductionHistoryById(Long id) {
         return productionHistoryRepository.findById(id).orElse(null);
     }
 
@@ -46,7 +44,7 @@ public class ProductionHistoryService {
         boolean is_finished = false;
         try {
             // Create a ProductionHistory object to store production data
-            ProductionHistory productionHistory = new ProductionHistory();
+            Productions productionHistory = new Productions();
             productionHistory.setBeerType(beerType);
             productionHistory.setAmountCount(amountCount);
             productionHistory.setMachSpeed(machSpeed);

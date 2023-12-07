@@ -1,24 +1,22 @@
 package org.app.api;
 
-import org.app.persistence.Productions;
 import org.app.service.*;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api")
 public class OPCController implements IOPCController {
-    private final ProductionHistoryService productionHistoryService;
+    private final ProductionsService productionsService;
 
     @Autowired
-    public OPCController(ProductionHistoryService productionHistoryService) {
-        this.productionHistoryService = productionHistoryService;
+    public OPCController(ProductionsService productionsService) {
+        this.productionsService = productionsService;
     }
 
     @Override
@@ -92,13 +90,13 @@ public class OPCController implements IOPCController {
     @PostMapping("/start_production")
     public void startProduction(@RequestBody Map<String, Integer> requestBody) throws Exception {
         boolean is_reset = false;
-        boolean is_finished = false;
         CommandController commandController = new CommandController();
         commandController.resetCommand();
-        //ProductionHistory ph = new ProductionHistory();
+
         while (!is_reset) {
             is_reset = OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")).equals("4");
         }
+
         commandController.setBeerType(requestBody);
         commandController.setAmount(requestBody);
         commandController.setSpeed(requestBody);
@@ -106,21 +104,7 @@ public class OPCController implements IOPCController {
         float beerType = requestBody.get("beerType");
         float amountCount = requestBody.get("amount");
         float machSpeed = requestBody.get("speed");
-        productionHistoryService.saveProductionData(beerType, amountCount, machSpeed);
-        /*ph.setBeerType(beerType);
-        ph.setAmountCount(amountCount);
-        ph.setMachSpeed(machSpeed);
-        ph.setTimeStampStart(LocalDateTime.now());
-        while (!is_finished) {
-            is_finished = OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")).equals("17");
-        }
-        int processedCount = Integer.parseInt(OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Admin.ProdProcessedCount")));
-        int defectiveCount = Integer.parseInt(OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Admin.ProdDefectiveCount")));
-        ph.setProcessedCount(processedCount);
-        ph.setDefectiveCount(defectiveCount);
-        ph.setTimeStampStop(LocalDateTime.now());
-        productionHistoryService.saveProductionHistory(ph);
-        */
+        productionsService.saveProductionData(beerType, amountCount, machSpeed);
     }
 
     @Override

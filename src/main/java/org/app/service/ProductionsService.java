@@ -9,35 +9,33 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ProductionHistoryService {
+public class ProductionsService {
 
-    private final ProductionsRepository productionHistoryRepository;
-    private final BatchRepository batchRepository;
+    private final ProductionsRepository productionRepository;
     private final SnapshotRepository snapshotRepository;
     private final StatusCodesRepository statusCodesRepository;
 
     @Autowired
-    public ProductionHistoryService(ProductionsRepository productionHistoryRepository, BatchRepository batchRepository, SnapshotRepository snapshotRepository, StatusCodesRepository statusCodesRepository) {
-        this.productionHistoryRepository = productionHistoryRepository;
-        this.batchRepository = batchRepository;
+    public ProductionsService(ProductionsRepository productionRepository, SnapshotRepository snapshotRepository, StatusCodesRepository statusCodesRepository) {
+        this.productionRepository = productionRepository;
         this.snapshotRepository = snapshotRepository;
         this.statusCodesRepository = statusCodesRepository;
     }
 
     public void saveProductionHistory(Productions productionHistory) {
-        productionHistoryRepository.save(productionHistory);
+        productionRepository.save(productionHistory);
     }
 
-    public List<Productions> getAllProductionHistories() {
-        return productionHistoryRepository.findAll();
+    public List<Productions> getAllProductions() {
+        return productionRepository.findAll();
     }
 
     public Productions getProductionHistoryById(Long id) {
-        return productionHistoryRepository.findById(id).orElse(null);
+        return productionRepository.findById(id).orElse(null);
     }
 
     public void deleteProductionHistory(Long id) {
-        productionHistoryRepository.deleteById(id);
+        productionRepository.deleteById(id);
     }
 
     public void saveProductionData(float beerType, float amountCount, float machSpeed) {
@@ -48,7 +46,7 @@ public class ProductionHistoryService {
             productionHistory.setBeerType(beerType);
             productionHistory.setAmountCount(amountCount);
             productionHistory.setMachSpeed(machSpeed);
-            productionHistory.setTimeStampStart(LocalDateTime.now());
+            productionHistory.setStartStamp(LocalDateTime.now());
             int processedCount = 0;
 
             // Wait for production to finish
@@ -62,7 +60,7 @@ public class ProductionHistoryService {
             int defectiveCount = Integer.parseInt(OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Admin.ProdDefectiveCount")));
             productionHistory.setProcessedCount(processedCount);
             productionHistory.setDefectiveCount(defectiveCount);
-            productionHistory.setTimeStampStop(LocalDateTime.now());
+            productionHistory.setStopStamp(LocalDateTime.now());
 
             // Save production data to the database
             saveProductionHistory(productionHistory);

@@ -15,10 +15,12 @@ const Tables: React.FC = () => {
 
     React.useEffect(() => {
         // Fetch production data from your API or server
-        axios.get<ProductionHistory[]>('/api/saveProductionData')
+        axios.get<ProductionHistory[]>('/api/productions/all')
             .then(response => setProductionData(response.data))
             .catch(error => console.error('Error fetching production data:', error));
     }, []);
+
+    console.log(productionData);
 
     return (
         <div className={styles.basicTable}>

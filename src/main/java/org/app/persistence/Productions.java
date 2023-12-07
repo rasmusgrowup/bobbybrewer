@@ -1,17 +1,31 @@
 package org.app.persistence;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name="productions")
 public class Productions {
 
-    @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="start_stamp")
+    private LocalDateTime startStamp;
+    @Column(name="stop_stamp")
+    private LocalDateTime stopStamp;
+    @Column(name="status_id")
+    private int statusId;
+    @Column(name="defective_count")
+    private int defectiveCount;
+    @Column(name="processed_count")
+    private int processedCount;
+    @Column(name="beer_type")
     private float beerType;
+    @Column(name="amount_count")
+    private float amountCount;
+    @Column(name="mach_speed")
+    private float machSpeed;
 
     public Long getId() {
         return id;
@@ -21,44 +35,28 @@ public class Productions {
         this.id = id;
     }
 
-    public float getBeerType() {
-        return beerType;
+    public LocalDateTime getStartStamp() {
+        return startStamp;
     }
 
-    public void setBeerType(float beerType) {
-        this.beerType = beerType;
+    public void setStartStamp(LocalDateTime startStamp) {
+        this.startStamp = startStamp;
     }
 
-    public LocalDateTime getTimeStampStart() {
-        return timeStampStart;
+    public LocalDateTime getStopStamp() {
+        return stopStamp;
     }
 
-    public void setTimeStampStart(LocalDateTime timeStampStart) {
-        this.timeStampStart = timeStampStart;
+    public void setStopStamp(LocalDateTime stopStamp) {
+        this.stopStamp = stopStamp;
     }
 
-    public LocalDateTime getTimeStampStop() {
-        return timeStampStop;
+    public float getStatusId() {
+        return statusId;
     }
 
-    public void setTimeStampStop(LocalDateTime timeStampStop) {
-        this.timeStampStop = timeStampStop;
-    }
-
-    public float getMachSpeed() {
-        return machSpeed;
-    }
-
-    public void setMachSpeed(float machSpeed) {
-        this.machSpeed = machSpeed;
-    }
-
-    public float getAmountCount() {
-        return amountCount;
-    }
-
-    public void setAmountCount(float amountCount) {
-        this.amountCount = amountCount;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
     public int getDefectiveCount() {
@@ -77,10 +75,27 @@ public class Productions {
         this.processedCount = processedCount;
     }
 
-    private LocalDateTime timeStampStart;
-    private LocalDateTime timeStampStop;
-    private float machSpeed;
-    private float amountCount;
-    private int defectiveCount;
-    private int processedCount;
+    public float getBeerType() {
+        return beerType;
+    }
+
+    public void setBeerType(float beerType) {
+        this.beerType = beerType;
+    }
+
+    public float getAmountCount() {
+        return amountCount;
+    }
+
+    public void setAmountCount(float amountCount) {
+        this.amountCount = amountCount;
+    }
+
+    public float getMachSpeed() {
+        return machSpeed;
+    }
+
+    public void setMachSpeed(float machSpeed) {
+        this.machSpeed = machSpeed;
+    }
 }

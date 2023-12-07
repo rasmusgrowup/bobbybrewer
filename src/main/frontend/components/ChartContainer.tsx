@@ -1,20 +1,44 @@
 import styles from '../styles/Home.module.css'
 import { LineChart } from '@mui/x-charts/LineChart';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import * as React from "react";
+import axios from 'axios';
+
+interface DataPoint {
+    x: number;
+    y: number;
+}
+
+type GraphData = {
+    xAxis: { data: number[] }[];
+    series: { data: number[] }[];
+};
 
 function PilsnerGraph(){
+    const [graphData, setGraphData] = useState<GraphData>({xAxis: [],series: []});
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/graph/exponential', {
+            params: {start: 0, end: 600, step: 50, b: 0.03487543, a: 1.012762}
+        })
+            .then(response => {
+                const xAxisData = response.data.map((point: DataPoint) => point.x);
+                const seriesData = response.data.map((point: DataPoint) => point.y);
+                setGraphData({
+                    xAxis: [{data: xAxisData}],
+                    series: [{data: seriesData}]
+                })
+
+            })
+    })
+
     return(
         <div className={styles.chartContainer}>
             {/* <header className={styles.chartHeader}>Pilsner</header> */}
             <LineChart
-                xAxis={[{ data: [200, 250, 300, 350, 400, 450, 500, 550, 600] }]}
-                series={[
-                    {
-                        data: [0, 1, 1, 3, 7, 12, 20, 36, 64],
-                    },
-                ]}
+                xAxis= {graphData.xAxis}
+                series={graphData.series}
                 width={700}
                 height={280}
             />

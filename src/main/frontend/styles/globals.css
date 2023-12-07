@@ -176,13 +176,13 @@ a {
 
 .MuiChartsAxis-root .MuiChartsAxis-tick,
 .MuiChartsAxis-root .MuiChartsAxis-line {
-  stroke: var(--main-color);
+  stroke: var(--main-color) !important;
 }
 
 .MuiChartsAxis-root .MuiChartsAxis-tickLabel {
-  fill: var(--main-color);
+  fill: var(--main-color) !important;
 }
 
 .MuiChartsAxisHighlight-root {
-  stroke: var(--main-color);
+  stroke: var(--main-color) !important;
 }

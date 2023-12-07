@@ -184,7 +184,7 @@
 .chartContainer {
   background-color: var(--background-color);
   border-radius: var(--border-radius);
-  padding: 2rem 1.66rem;
+  /*padding: 2rem 1.66rem;*/
   position: relative;
   grid-column: 4 / span 6;
   grid-row: 4 / span 5;

@@ -7,7 +7,7 @@ import * as React from "react";
 function PilsnerGraph(){
     return(
         <div className={styles.chartContainer}>
-            <header className={styles.chartHeader}>Pilsner</header>
+            {/* <header className={styles.chartHeader}>Pilsner</header> */}
             <LineChart
                 xAxis={[{ data: [200, 250, 300, 350, 400, 450, 500, 550, 600] }]}
                 series={[
@@ -15,8 +15,8 @@ function PilsnerGraph(){
                         data: [0, 1, 1, 3, 7, 12, 20, 36, 64],
                     },
                 ]}
-                width={750}
-                height={350}
+                width={700}
+                height={280}
             />
         </div>
     )
@@ -25,7 +25,7 @@ function PilsnerGraph(){
 function WheatGraph(){
     return(
         <div className={styles.chartContainer}>
-            <header className={styles.chartHeader}>Wheat</header>
+            {/* <header className={styles.chartHeader}>Wheat</header> */}
             <LineChart
                 xAxis={[{ data: [25, 50, 75, 100, 125, 150, 175, 200, 250, 300] }]}
                 series={[
@@ -33,8 +33,8 @@ function WheatGraph(){
                         data: [null, null, 23, 34, 40, 49, 57, 65, 81,100],
                     },
                 ]}
-                width={750}
-                height={350}
+                width={500}
+                height={200}
             />
         </div>
     )
@@ -43,7 +43,7 @@ function WheatGraph(){
 function IPAGraph(){
     return(
         <div className={styles.chartContainer}>
-            <header className={styles.chartHeader}>IPA</header>
+            {/* <header className={styles.chartHeader}>IPA</header> */}
             <LineChart
                 xAxis={[{ data: [30, 50, 75, 100, 125, 150] }]}
                 series={[
@@ -51,8 +51,8 @@ function IPAGraph(){
                         data: [0, 4, 23, 34, 40, 49],
                     },
                 ]}
-                width={750}
-                height={350}
+                width={500}
+                height={200}
             />
         </div>
     )
@@ -61,7 +61,7 @@ function IPAGraph(){
 function StoutGraph(){
     return(
         <div className={styles.chartContainer}>
-            <header className={styles.chartHeader}>Stout</header>
+            {/* <header className={styles.chartHeader}>Stout</header> */}
             <LineChart
                 xAxis={[{ data: [30, 50, 80, 100, 130, 150, 180, 200] }]}
                 series={[
@@ -69,8 +69,8 @@ function StoutGraph(){
                         data: [45, 38, 47, 42, 43, 27, 21, 11],
                     },
                 ]}
-                width={750}
-                height={350}
+                width={500}
+                height={200}
             />
         </div>
     )
@@ -79,7 +79,7 @@ function StoutGraph(){
 function AleGraph(){
     return(
         <div className={styles.chartContainer}>
-            <header className={styles.chartHeader}>Ale</header>
+            {/* <header className={styles.chartHeader}>Ale</header> */}
             <LineChart
                 xAxis={[{ data: [30, 50, 75, 100] }]}
                 series={[
@@ -87,8 +87,8 @@ function AleGraph(){
                         data: [2, 7, 15, 40],
                     },
                 ]}
-                width={750}
-                height={350}
+                width={500}
+                height={200}
             />
         </div>
     )
@@ -97,7 +97,7 @@ function AleGraph(){
 function AlcoholFreeGraph(){
     return(
         <div className={styles.chartContainer}>
-            <header className={styles.chartHeader}>Alcohol-free</header>
+            {/* <header className={styles.chartHeader}>Alcohol-free</header> */}
             <LineChart
                 xAxis={[{ data: [30, 50, 80, 100, 120] }]}
                 series={[
@@ -105,8 +105,8 @@ function AlcoholFreeGraph(){
                         data: [21, 21, 41, 53, 68],
                     },
                 ]}
-                width={750}
-                height={350}
+                width={500}
+                height={200}
             />
         </div>
     )
@@ -121,6 +121,7 @@ export default function ChartContainer() {
         <div>
             <div className={styles.column}>
                 <RadioGroup
+                    row
                     onChange={handleGraphChange}
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="0"
@@ -137,7 +138,7 @@ export default function ChartContainer() {
                                       label="Alcohol-free"/>
                 </RadioGroup>
             </div>
-            <div className={styles.basicTableInner}>
+            <div>
                 {
                     {
                         0: <PilsnerGraph/>,

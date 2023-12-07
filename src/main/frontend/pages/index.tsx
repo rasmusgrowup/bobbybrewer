@@ -17,6 +17,7 @@ interface MyData {
 
 const Home: NextPage = () => {
     const [data, setData] = useState<MyData>({});
+    const [dataStatic, setDataStatic] = useState<MyData>({});
     const [openRefill, setRefill] = useState(false);
     const [amountFromChild, setAmountFromChild] = useState(0);
 
@@ -34,18 +35,7 @@ const Home: NextPage = () => {
                     return res.json();
                 })
                 .then(data => {
-                    // Assuming data structure needs to be { nodeId: '...', value: ... }
-                    const { nodeId, value } = data;
-
-                    // Split the string by colons and select the parts that represent the property
-                    const parts = nodeId.split(':');
-                    const propertyName = parts.slice(3).join(''); // This will join the parts after "s="
-
-                    // Update the state with the new value
-                    setData(prevData => ({
-                        ...prevData,
-                        [propertyName]: value,
-                    }));
+                    setDataStatic(data.data)
                 })
                 .catch(error => {
                     setData({ error: error.toString() }); // Update state with an error message if needed

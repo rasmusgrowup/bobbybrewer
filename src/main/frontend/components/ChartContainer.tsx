@@ -65,18 +65,31 @@ function WheatGraph(){
 }
 
 function IPAGraph(){
+    const [graphData, setGraphData] = useState<GraphData>({xAxis: [],series: []});
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/graph/exponential', {
+            params: {start: 0, end: 150, step: 10, b: 2.459591, a: 1.022507}
+        })
+            .then(response => {
+                const xAxisData = response.data.map((point: DataPoint) => point.x);
+                const seriesData = response.data.map((point: DataPoint) => point.y);
+                setGraphData({
+                    xAxis: [{data: xAxisData}],
+                    series: [{data: seriesData}]
+                })
+
+            })
+    })
+
     return(
         <div className={styles.chartContainer}>
             {/* <header className={styles.chartHeader}>IPA</header> */}
             <LineChart
-                xAxis={[{ data: [30, 50, 75, 100, 125, 150] }]}
-                series={[
-                    {
-                        data: [0, 4, 23, 34, 40, 49],
-                    },
-                ]}
-                width={500}
-                height={200}
+                xAxis= {graphData.xAxis}
+                series={graphData.series}
+                width={700}
+                height={280}
             />
         </div>
     )
@@ -101,18 +114,31 @@ function StoutGraph(){
 }
 
 function AleGraph(){
+    const [graphData, setGraphData] = useState<GraphData>({xAxis: [],series: []});
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/graph/exponential', {
+            params: {start: 0, end: 100, step: 10, b: 0.6930199, a: 1.04204}
+        })
+            .then(response => {
+                const xAxisData = response.data.map((point: DataPoint) => point.x);
+                const seriesData = response.data.map((point: DataPoint) => point.y);
+                setGraphData({
+                    xAxis: [{data: xAxisData}],
+                    series: [{data: seriesData}]
+                })
+
+            })
+    })
+
     return(
         <div className={styles.chartContainer}>
             {/* <header className={styles.chartHeader}>Ale</header> */}
             <LineChart
-                xAxis={[{ data: [30, 50, 75, 100] }]}
-                series={[
-                    {
-                        data: [2, 7, 15, 40],
-                    },
-                ]}
-                width={500}
-                height={200}
+                xAxis= {graphData.xAxis}
+                series={graphData.series}
+                width={700}
+                height={280}
             />
         </div>
     )

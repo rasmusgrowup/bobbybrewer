@@ -17,9 +17,37 @@ interface MyData {
 
 const Home: NextPage = () => {
     const [data, setData] = useState<MyData>({});
-    const [nodeData, setNodeData] = useState<{ [key: string]: string }>({});
+    const [dataStatic, setDataStatic] = useState<MyData>({});
     const [openRefill, setRefill] = useState(false);
-    const counter : number | undefined = data['Maintenance.Counter'];
+    const [amountFromChild, setAmountFromChild] = useState(0);
+
+    const handleAmountChange = (amount: number) => {
+        setAmountFromChild(amount);
+    };
+
+    useEffect(() => {
+        const fetchData = () => {
+            fetch('/api/read-current-state')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    setDataStatic(data.data)
+                })
+                .catch(error => {
+                    setData({ error: error.toString() }); // Update state with an error message if needed
+                    console.error('An error occurred:', error);
+                });
+        };
+
+        // Call the function once immediately, then set the interval
+        fetchData();
+
+        // Cleanup function to clear the interval when the component unmounts
+    }, []);
 
     useEffect(() => {
         const eventSource = new EventSource('/sse/stream');
@@ -39,16 +67,18 @@ const Home: NextPage = () => {
                 [propertyName]: value,
             }));
         };
+
         return () => {
             eventSource.close();
         };
     }, []);
 
     useEffect(()=>{
-        if(data['Cube.Status.StateCurrent'] == 11 /* && data['Cube.Admin.StopReason.Id'] == 10 */){
+        if(data['Cube.Status.StateCurrent'] == 11 && data['Cube.Admin.StopReason.ID'] == 10 ){
             setRefill(true)
         }
-    },[data['Cube.Status.StateCurrent']]);
+
+    },[data['Cube.Status.StateCurrent'],data['Cube.Admin.StopReason.ID']]);
 
     const startMaintenance = async () => {
         try {
@@ -80,12 +110,12 @@ const Home: NextPage = () => {
                     <img className={styles.beerLogo} src="/indexlogo.png" alt="beer"/>
                 </div>
                 <div className={styles.dashboard}>
-                    <FormContainer data={data}/>
+                    <FormContainer data={data} onAmountChange={handleAmountChange}/>
                     <InventoryContainer data={data}/>
                     <StatusContainer data={data}/>
                     <SensorContainer data={data}/>
                     <MaintenanceBar data={data}/>
-                    <BasicTable />
+                    <BasicTable data={data} amount={amountFromChild}/>
                 </div>
                 {openRefill && <RefillModal closeRefill={() => setRefill(false)} />}
             </main>

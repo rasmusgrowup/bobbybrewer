@@ -9,4 +9,3 @@ Run the application with one liner:
 Then you can browse the website at:
 
 * http://localhost:8080/
-* http://localhost:8080/my-awesome-page

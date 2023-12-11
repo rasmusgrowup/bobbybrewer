@@ -3,7 +3,7 @@ import {Unstable_NumberInput as NumberInput} from '@mui/base/Unstable_NumberInpu
 import styles from '../styles/Home.module.css'
 import {useState} from "react";
 
-export default function FormContainer({data}: {data: any}) {
+export default function FormContainer({ data, onAmountChange }: { data: any, onAmountChange: (amount: number) => void }) {
     const [amount, setAmount] = useState(100);
     const [speed, setSpeed] = useState(30);
     const [beerType, setBeerType] = useState(0);
@@ -13,7 +13,7 @@ export default function FormContainer({data}: {data: any}) {
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
         // We say + 50 on the counters to ensure the machine never get into a deadlock
-        const barleyCounter = 50+parseFloat(String(data['Inventory.Barley']))
+     /*   const barleyCounter = 50+parseFloat(String(data['Inventory.Barley']))
         const hopsCounter = 50+parseFloat(String(data['Inventory.Hops']))
         const maltCounter = 50+parseFloat(String(data['Inventory.Malt']))
         const wheatCounter = 50+parseFloat(String(data['Inventory.Wheat']))
@@ -78,7 +78,7 @@ export default function FormContainer({data}: {data: any}) {
                     return;
                 }
                 break;
-        }
+        } */
 
         const maintenanceCounter = parseFloat(String(data['Maintenance.Counter'])); // Sikre at data.maintenanceCounter et tal
         const maintenanceTotal = maintenanceCounter + amount; //Lægger counter og amount sammen
@@ -114,6 +114,8 @@ export default function FormContainer({data}: {data: any}) {
         } catch (error) {
             console.error('Error:', error);
         }
+
+        onAmountChange(amount);
     };
 
 

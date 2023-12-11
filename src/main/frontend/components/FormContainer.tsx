@@ -193,7 +193,6 @@ export default function FormContainer({ data, onAmountChange }: { data: any, onA
                     <label className={styles.amountLabel}>Choose amount</label>
                     <NumberInput
                         aria-label="Amount of beer"
-                        placeholder="Choose amount of beer"
                         value={amount}
                         onChange={(event, val: any) => setAmount(val)}
                         step={100}

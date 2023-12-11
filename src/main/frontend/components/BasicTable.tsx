@@ -3,6 +3,7 @@ import styles from '../styles/Home.module.css'
 import {useEffect, useState} from "react";
 import ChartContainer from "./ChartContainer";
 import {Box, LinearProgress, LinearProgressProps, Typography} from "@mui/material";
+import axios from "axios";
 
 function createData(
     name: string,
@@ -24,26 +25,47 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
 ];
-
+interface ProductionHistory {
+    id: number;
+    batchid: number;
+    startStamp: string;
+    stopStamp: string;
+    statusId: number;
+}
 function History() {
+    const [productionData, setProductionData] = React.useState<ProductionHistory[]>([]);
+
+    React.useEffect(() => {
+        // Fetch production data from your API or server
+        axios.get<ProductionHistory[]>('/api/productions/all')
+            .then(response => setProductionData(response.data))
+            .catch(error => console.error('Error fetching production data:', error));
+    }, []);
+
+    console.log(productionData);
+
     return (
-        <div>
-            <ul>
-                <li>Batch id</li>
-                <li>Timestamp</li>
-                <li>Defective Produced</li>
-                <li>Total Produced</li>
-            </ul>
-            {rows.map((row, index) => (
-                <ul key={index}>
-                    <li>{row.name}</li>
-                    <li>{row.calories}</li>
-                    <li>{row.fat}</li>
-                    <li>{row.protein}</li>
+        <div className={styles.basicTable}>
+            <div className={styles.basicTableInner}>
+                <ul className={styles.stickyHeader}>
+                    <li>ID</li>
+                    <li>Batch ID</li>
+                    <li>Start Stamp</li>
+                    <li>Stop Stamp</li>
+                    <li>Status ID</li>
                 </ul>
-            ))}
+                {productionData.map((row) => (
+                    <ul key={row.id}>
+                        <li>{row.id}</li>
+                        <li>{row.batchid}</li>
+                        <li>{row.startStamp}</li>
+                        <li>{row.stopStamp}</li>
+                        <li>{row.statusId}</li>
+                    </ul>
+                ))}
+            </div>
         </div>
-    )
+    );
 }
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {

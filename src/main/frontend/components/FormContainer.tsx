@@ -8,6 +8,8 @@ export default function FormContainer({data}: {data: any}) {
     const [speed, setSpeed] = useState(30);
     const [beerType, setBeerType] = useState(0);
     const [maxSpeed,setMaxSpeed] = useState(600);
+
+    console.log(amount, speed, beerType, maxSpeed)
     const handleStartProduction = async () => {
         // Here, you can make a fetch request to send messages and multiple commands to the OPC server
         // We say + 50 on the counters to ensure the machine never get into a deadlock

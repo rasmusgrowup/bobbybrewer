@@ -7,6 +7,13 @@ CREATE TABLE IF NOT EXISTS statusCodes
     description VARCHAR(255)
 );
 
+INSERT INTO statusCodes (description)
+VALUES
+    ('In production'),
+    ('Stopped'),
+    ('Aborted'),
+    ('Completed');
+
 CREATE TABLE IF NOT EXISTS productions
 (
     id             BIGINT AUTO_INCREMENT PRIMARY KEY,

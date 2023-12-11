@@ -61,6 +61,7 @@ public class ProductionsService {
             productionHistory.setProcessedCount(processedCount);
             productionHistory.setDefectiveCount(defectiveCount);
             productionHistory.setStopStamp(LocalDateTime.now());
+            productionHistory.setStatusId(getStatusCode()); // test
 
             // Save production data to the database
             saveProductionHistory(productionHistory);
@@ -70,6 +71,24 @@ public class ProductionsService {
         }
     }
 
+    public int getStatusCode() throws Exception {
+        int statusCode = -1;
+        String currentState = OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent"));
+        switch (currentState) {
+            case "2":
+                statusCode = 2;
+                break;
+            case "9":
+                statusCode = 3;
+                break;
+            case "17":
+                statusCode = 4;
+                break;
+            default:
+                statusCode = 1;
+        }
+        return statusCode;
+    };
 }
 
 

@@ -1,4 +1,3 @@
-import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import React, {useEffect, useState} from "react";
@@ -15,10 +14,10 @@ interface MyData {
     [key: string]: any;
 }
 
-const Home: NextPage = () => {
+function Home() {
     const [data, setData] = useState<MyData>({});
     const [dataStatic, setDataStatic] = useState<MyData>({});
-    const [openRefill, setRefill] = useState(false);
+    const [openRefill, setRefill] = useState(true);
     const [amountFromChild, setAmountFromChild] = useState(0);
 
     const handleAmountChange = (amount: number) => {

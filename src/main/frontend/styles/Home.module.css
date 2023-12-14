@@ -280,7 +280,7 @@
   border-radius: calc(var(--border-radius) - 3px);
   height: 383px;
   overflow: scroll;
-  padding: 1rem 2rem;
+  padding: 1rem;
   width: 100%;
 }
 
@@ -296,7 +296,12 @@
 .basicTableInner ul li {
   flex: 1;
   font-size: 80%;
-  width: 25%;
+  width: 11%;
+}
+
+.graphContainer {
+  overflow: scroll;
+  height: 100%;
 }
 
 /*

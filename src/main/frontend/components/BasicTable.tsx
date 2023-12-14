@@ -5,32 +5,16 @@ import ChartContainer from "./ChartContainer";
 import {Box, LinearProgress, LinearProgressProps, Typography} from "@mui/material";
 import axios from "axios";
 
-function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-) {
-    return {name, calories, fat, carbs, protein};
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Test', 356, 16.0, 49, 3.9),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-];
 interface ProductionHistory {
     id: number;
-    batchid: number;
     startStamp: string;
     stopStamp: string;
     statusId: number;
+    defectiveCount: number;
+    processedCount: number;
+    beerType: number;
+    amountCount: number;
+    machSpeed: number;
 }
 function History() {
     const [productionData, setProductionData] = React.useState<ProductionHistory[]>([]);
@@ -45,25 +29,31 @@ function History() {
     console.log(productionData);
 
     return (
-        <div className={styles.basicTable}>
-            <div className={styles.basicTableInner}>
-                <ul className={styles.stickyHeader}>
-                    <li>ID</li>
-                    <li>Batch ID</li>
-                    <li>Start Stamp</li>
-                    <li>Stop Stamp</li>
-                    <li>Status ID</li>
+        <div className={styles.graphContainer}>
+            <ul className={styles.stickyHeader}>
+                <li>Batch ID</li>
+                <li>Start time</li>
+                <li>Stop time</li>
+                <li>Status ID</li>
+                <li>Defective</li>
+                <li>Successful</li>
+                <li>Beer type</li>
+                <li>Amount</li>
+                <li>Speed</li>
+            </ul>
+            {productionData.map((row) => (
+                <ul key={row.id}>
+                    <li>{row.id}</li>
+                    <li>{row.startStamp}</li>
+                    <li>{row.stopStamp}</li>
+                    <li>{row.statusId}</li>
+                    <li>{row.defectiveCount}</li>
+                    <li>{row.processedCount}</li>
+                    <li>{row.beerType}</li>
+                    <li>{row.amountCount}</li>
+                    <li>{row.machSpeed}</li>
                 </ul>
-                {productionData.map((row) => (
-                    <ul key={row.id}>
-                        <li>{row.id}</li>
-                        <li>{row.batchid}</li>
-                        <li>{row.startStamp}</li>
-                        <li>{row.stopStamp}</li>
-                        <li>{row.statusId}</li>
-                    </ul>
-                ))}
-            </div>
+            ))}
         </div>
     );
 }

@@ -15,8 +15,8 @@ function PilsnerGraph(){
                         data: [0, 1, 1, 3, 7, 12, 20, 36, 64],
                     },
                 ]}
-                width={700}
-                height={280}
+                width={725}
+                height={300}
             />
         </div>
     )
@@ -33,8 +33,8 @@ function WheatGraph(){
                         data: [null, null, 23, 34, 40, 49, 57, 65, 81,100],
                     },
                 ]}
-                width={500}
-                height={200}
+                width={725}
+                height={300}
             />
         </div>
     )
@@ -51,8 +51,8 @@ function IPAGraph(){
                         data: [0, 4, 23, 34, 40, 49],
                     },
                 ]}
-                width={500}
-                height={200}
+                width={725}
+                height={300}
             />
         </div>
     )
@@ -69,8 +69,8 @@ function StoutGraph(){
                         data: [45, 38, 47, 42, 43, 27, 21, 11],
                     },
                 ]}
-                width={500}
-                height={200}
+                width={725}
+                height={300}
             />
         </div>
     )
@@ -87,8 +87,8 @@ function AleGraph(){
                         data: [2, 7, 15, 40],
                     },
                 ]}
-                width={500}
-                height={200}
+                width={725}
+                height={300}
             />
         </div>
     )
@@ -105,8 +105,8 @@ function AlcoholFreeGraph(){
                         data: [21, 21, 41, 53, 68],
                     },
                 ]}
-                width={500}
-                height={200}
+                width={725}
+                height={300}
             />
         </div>
     )

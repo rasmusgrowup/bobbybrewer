@@ -1,4 +1,4 @@
-.refillBackground {
+.modalBackground {
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-.refillContainer {
+.modalContainer {
     width: 500px;
     height: 500px;
     border-radius: 12px;
@@ -18,7 +18,7 @@
     padding: 25px;
 }
 
-.refillContainer .title {
+.modalContainer .title {
     display: inline-block;
     text-align: center;
     margin-top: 10px;
@@ -29,23 +29,23 @@
     justify-content: flex-end;
 }
 
-.refillContainer .body {
+.modalContainer .body {
     flex: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.7rem;
+    font-size: 1.0rem;
     text-align: center;
 }
 
-.refillContainer .footer {
+.modalContainer .footer {
     flex: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.refillContainer .button {
+.modalContainer .button {
     width: 150px;
     height: 45px;
     margin: 10px;

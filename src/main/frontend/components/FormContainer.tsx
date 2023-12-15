@@ -112,7 +112,6 @@ export default function FormContainer({ data, onAmountChange }: { data: any, onA
         } catch (error) {
             console.error('Error:', error);
         }
-
         onAmountChange(amount);
     };
 
@@ -192,6 +191,7 @@ export default function FormContainer({ data, onAmountChange }: { data: any, onA
                 <div className={styles.column}>
                     <label className={styles.amountLabel}>Choose amount</label>
                     <NumberInput
+                        component="input"
                         aria-label="Amount of beer"
                         placeholder="Choose amount of beer"
                         value={amount}

@@ -9,6 +9,8 @@ import SensorContainer from "../components/SensorContainer";
 import MaintenanceBar from "../components/MaintenanceBar";
 import BasicTable from "../components/BasicTable";
 import RefillModal from "../components/RefillModal";
+import MaintenanceModal from "../components/MaintenanceModal";
+import SensorWarning from "../components/SensorWarning";
 
 interface MyData {
     'Maintenance.Counter'?: number|0;
@@ -19,6 +21,7 @@ const Home: NextPage = () => {
     const [data, setData] = useState<MyData>({});
     const [dataStatic, setDataStatic] = useState<MyData>({});
     const [openRefill, setRefill] = useState(false);
+    const [openMaintenance, setMaintenance] = useState(false);
     const [amountFromChild, setAmountFromChild] = useState(0);
 
     const handleAmountChange = (amount: number) => {
@@ -74,10 +77,14 @@ const Home: NextPage = () => {
     }, []);
 
     useEffect(()=>{
-        if(data['Cube.Status.StateCurrent'] == 11 && data['Cube.Admin.StopReason.ID'] == 10 ){
-            setRefill(true)
+        if(data['Cube.Status.StateCurrent'] == 11){
+            if(data['Cube.Admin.StopReason.ID'] == 10){
+                setRefill(true);
+            }
+            else if(data['Cube.Admin.StopReason.ID'] == 11){
+                setMaintenance(false);
+            }
         }
-
     },[data['Cube.Status.StateCurrent'],data['Cube.Admin.StopReason.ID']]);
 
     const startMaintenance = async () => {
@@ -117,7 +124,9 @@ const Home: NextPage = () => {
                     <MaintenanceBar data={data}/>
                     <BasicTable data={data} amount={amountFromChild}/>
                 </div>
-                {openRefill && <RefillModal closeRefill={() => setRefill(false)} />}
+                {openRefill && <RefillModal closeRefill={() => setRefill(false)}/>}
+                {openMaintenance && <MaintenanceModal closeMaintenance={() => setMaintenance(false)}/>}
+                <SensorWarning data={data}/>
             </main>
         </>
     )

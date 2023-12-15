@@ -4,13 +4,16 @@ import org.app.service.*;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OPCController implements IOPCController {
     private final ProductionsService productionsService;
 

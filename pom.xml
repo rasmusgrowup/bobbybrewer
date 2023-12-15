@@ -80,7 +80,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.31</version> <!-- Use the version that corresponds to your MySQL version -->
 		</dependency>
-
 	</dependencies>
 
 	<build>

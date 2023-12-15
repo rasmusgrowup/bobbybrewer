@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.annotation.PostConstruct;
 
 @SpringBootApplication
-
 public class DemoApplication {
 
 	@Autowired

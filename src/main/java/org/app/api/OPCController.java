@@ -1,28 +1,26 @@
 package org.app.api;
 
-//import org.app.persistence.ProductionHistory;
-import org.app.service.CommandController;
-import org.app.service.IOPCController;
-import org.app.service.OpcUaClientSingleton;
-import org.app.service.OpcUaUtility;
+import org.app.service.*;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OPCController implements IOPCController {
-    /*private final ProductionHistoryService productionHistoryService;
+    private final ProductionsService productionsService;
 
     @Autowired
-    public OPCController(ProductionHistoryService productionHistoryService) {
-        this.productionHistoryService = productionHistoryService;
-    }*/
+    public OPCController(ProductionsService productionsService) {
+        this.productionsService = productionsService;
+    }
 
     @Override
     @GetMapping("/read-current-state")
@@ -32,35 +30,36 @@ public class OPCController implements IOPCController {
             OpcUaClient opcClient = OpcUaClientSingleton.getInstance();
             //Current state:
             NodeId stateCurrent = new NodeId(6, "::Program:Cube.Status.StateCurrent");
-            responseData.put("stateCurrent", OpcUaUtility.readValue(opcClient, stateCurrent));
+            responseData.put("Cube.Status.StateCurrent", OpcUaUtility.readValue(opcClient, stateCurrent));
             //Product:
-            NodeId totalProduced = new NodeId(6, "::Program:product.produced");
-            NodeId goodProducts = new NodeId(6, "::Program:product.good");
-            NodeId badProducts = new NodeId(6, "::Program:product.bad");
-            responseData.put("totalProduced", OpcUaUtility.readValue(opcClient, totalProduced));
-            responseData.put("goodProducts", OpcUaUtility.readValue(opcClient, goodProducts));
-            responseData.put("badProducts", OpcUaUtility.readValue(opcClient, badProducts));
+            NodeId totalProduced = new NodeId(6, "::Program:Cube.Admin.ProdProcessedCount");
+            NodeId badProducts = new NodeId(6, "::Program:Cube.Admin.ProdDefectiveCount");
+            responseData.put("Cube.Admin.ProdProcessedCount", OpcUaUtility.readValue(opcClient, totalProduced));
+            responseData.put("Cube.Admin.ProdDefectiveCount", OpcUaUtility.readValue(opcClient, badProducts));
             //Maintenance:
             NodeId maintenanceCounter = new NodeId(6, "::Program:Maintenance.Counter");
-            responseData.put("maintenanceCounter", OpcUaUtility.readValue(opcClient, maintenanceCounter));
+            responseData.put("Maintenance.Counter", OpcUaUtility.readValue(opcClient, maintenanceCounter));
             //Inventory:
             NodeId inventoryYeast = new NodeId(6, "::Program:Inventory.Yeast");
             NodeId inventoryWheat = new NodeId(6, "::Program:Inventory.Wheat");
             NodeId inventoryMalt = new NodeId(6, "::Program:Inventory.Malt");
             NodeId inventoryHops = new NodeId(6, "::Program:Inventory.Hops");
             NodeId inventoryBarley = new NodeId(6, "::Program:Inventory.Barley");
-            responseData.put("inventoryYeast", OpcUaUtility.readValue(opcClient, inventoryYeast));
-            responseData.put("inventoryWheat", OpcUaUtility.readValue(opcClient, inventoryWheat));
-            responseData.put("inventoryMalt", OpcUaUtility.readValue(opcClient, inventoryMalt));
-            responseData.put("inventoryHops", OpcUaUtility.readValue(opcClient, inventoryHops));
-            responseData.put("inventoryBarley", OpcUaUtility.readValue(opcClient, inventoryBarley));
+            responseData.put("Inventory.Yeast", OpcUaUtility.readValue(opcClient, inventoryYeast));
+            responseData.put("Inventory.Wheat", OpcUaUtility.readValue(opcClient, inventoryWheat));
+            responseData.put("Inventory.Malt", OpcUaUtility.readValue(opcClient, inventoryMalt));
+            responseData.put("Inventory.Hops", OpcUaUtility.readValue(opcClient, inventoryHops));
+            responseData.put("Inventory.Barley", OpcUaUtility.readValue(opcClient, inventoryBarley));
             //Sensors:
             NodeId humidity = new NodeId(6, "::Program:Cube.Status.Parameter[2].Value");
             NodeId temperature = new NodeId(6, "::Program:Cube.Status.Parameter[3].Value");
             NodeId vibration = new NodeId(6, "::Program:Cube.Status.Parameter[4].Value");
-            responseData.put("humidity", OpcUaUtility.readValue(opcClient, humidity));
-            responseData.put("temperature", OpcUaUtility.readValue(opcClient, temperature));
-            responseData.put("vibration", OpcUaUtility.readValue(opcClient, vibration));
+            responseData.put("Cube.Status.Parameter[2].Value", OpcUaUtility.readValue(opcClient, humidity));
+            responseData.put("Cube.Status.Parameter[3].Value", OpcUaUtility.readValue(opcClient, temperature));
+            responseData.put("Cube.Status.Parameter[4].Value", OpcUaUtility.readValue(opcClient, vibration));
+
+            NodeId stopReason = new NodeId(6, "::Program:Cube.Admin.StopReason.ID");
+            responseData.put("Cube.Admin.StopReason.ID",OpcUaUtility.readValue(opcClient,stopReason));
 
             return responseData;
         } catch (Exception e) {
@@ -95,13 +94,13 @@ public class OPCController implements IOPCController {
     @PostMapping("/start_production")
     public void startProduction(@RequestBody Map<String, Integer> requestBody) throws Exception {
         boolean is_reset = false;
-        boolean is_finished = false;
         CommandController commandController = new CommandController();
         commandController.resetCommand();
-        //ProductionHistory ph = new ProductionHistory();
+
         while (!is_reset) {
             is_reset = OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")).equals("4");
         }
+
         commandController.setBeerType(requestBody);
         commandController.setAmount(requestBody);
         commandController.setSpeed(requestBody);
@@ -109,20 +108,7 @@ public class OPCController implements IOPCController {
         float beerType = requestBody.get("beerType");
         float amountCount = requestBody.get("amount");
         float machSpeed = requestBody.get("speed");
-        /*ph.setBeerType(beerType);
-        ph.setAmountCount(amountCount);
-        ph.setMachSpeed(machSpeed);
-        ph.setTimeStampStart(LocalDateTime.now());
-        while (!is_finished) {
-            is_finished = OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Status.StateCurrent")).equals("17");
-        }
-        int processedCount = Integer.parseInt(OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Admin.ProdProcessedCount")));
-        int defectiveCount = Integer.parseInt(OpcUaUtility.readValue(OpcUaClientSingleton.getInstance(), new NodeId(6, "::Program:Cube.Admin.ProdDefectiveCount")));
-        ph.setProcessedCount(processedCount);
-        ph.setDefectiveCount(defectiveCount);
-        ph.setTimeStampStop(LocalDateTime.now());
-        productionHistoryService.saveProductionHistory(ph);
-        */
+        productionsService.saveProductionData(beerType, amountCount, machSpeed);
     }
 
     @Override

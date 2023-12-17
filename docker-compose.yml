@@ -1,40 +1,18 @@
-version: "3.7"
-
+version: '3'
 services:
-  api_service:
-    build: .
-    restart: always
-    ports:
-      - "8080:8080"
-      - "3000:3000"
-      - "4840:4840"
-    networks:
-      - springapimysql-net
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/basics?allowPublicKeyRetrieval=true
-    depends_on:
-      - mysqldb
-    volumes:
-      - ./.m2:/root/.m2
-
-  mysqldb:
-    image: "mysql:8.0"
-    restart: always
-    ports:
-      - "3306:3306"
-    networks:
-      - springapimysql-net
-    environment:
-      - MYSQL_DATABASE=basics
-      - MYSQL_USER=bobbybrewer
-      - MYSQL_PASSWORD=bobby_pw
-      - MYSQL_ROOT_PASSWORD=bobby_rpw
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - db-data:/var/lib/mysql
-
-networks:
-  springapimysql-net:
+    mysqldb:
+        image: "mysql:latest"
+        restart: always
+        ports:
+            - "3307:3306"
+        environment:
+            MYSQL_DATABASE: beerprod
+            MYSQL_USER: bobbybrewer
+            MYSQL_PASSWORD: bobby_pw
+            MYSQL_ROOT_PASSWORD: bobby_rpw
+        volumes:
+            - ./src/main/database/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
-  db-data:
+    init.sql:
+

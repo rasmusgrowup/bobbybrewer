@@ -1,13 +1,13 @@
 CREATE DATABASE IF NOT EXISTS beerprod;
 USE beerprod;
 
-CREATE TABLE IF NOT EXISTS statusCodes
+CREATE TABLE IF NOT EXISTS status_codes
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     description VARCHAR(255)
 );
 
-INSERT INTO statusCodes (description)
+INSERT INTO status_codes (description)
 VALUES
     ('In production'),
     ('Stopped'),
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS productions
     beer_type       FLOAT,
     amount_count    FLOAT,
     mach_speed      FLOAT,
-    FOREIGN KEY (status_id) REFERENCES statusCodes (id)
+    FOREIGN KEY (status_id) REFERENCES status_codes (id)
 );
 
 CREATE TABLE IF NOT EXISTS snapshot

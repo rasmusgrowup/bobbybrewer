@@ -1,9 +1,6 @@
 package org.app.api;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import org.app.service.Graph;
 import org.app.service.Point;
@@ -12,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/graph")
+@CrossOrigin(origins = "http://localhost:3000")
 public class GraphController {
 
     @GetMapping("/exponential")

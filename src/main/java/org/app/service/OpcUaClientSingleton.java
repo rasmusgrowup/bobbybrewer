@@ -13,8 +13,8 @@ import java.util.List;
 public class OpcUaClientSingleton {
 
     private static OpcUaClient instance;
-    private static final String ENDPOINT_URL = "opc.tcp://127.0.0.1:4840";
-    private static final String MACHINE_ENDPOINT_URL = "opc.tcp://192.168.0.122:4840";
+    private static final String ENDPOINT_URL = "opc.tcp://127.0.0.1:4840"; // endpoint for sim
+    private static final String MACHINE_ENDPOINT_URL = "opc.tcp://192.168.0.122:4840"; // endpoint for machine
     private static final String TEST_ENDPOINT_URL = "opc.tcp://127.0.0.1:4334"; // node server endpoint for mac users
 
     OpcUaClientSingleton() {
@@ -23,8 +23,8 @@ public class OpcUaClientSingleton {
     public static synchronized OpcUaClient getInstance() throws Exception {
         String robotIP = System.getenv("ROBOT");
         if (instance == null) {
-            List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints("opc.tcp://127.0.0.1:4840").get();
-            EndpointDescription configPoint = EndpointUtil.updateUrl(endpoints.get(0), "127.0.0.1", 4840);
+            List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints("opc.tcp://192.168.0.122:4840").get();
+            EndpointDescription configPoint = EndpointUtil.updateUrl(endpoints.get(0), "192.168.0.122", 4840);
 
             OpcUaClientConfigBuilder cfg = new OpcUaClientConfigBuilder();
             cfg.setEndpoint(configPoint);
@@ -33,16 +33,5 @@ public class OpcUaClientSingleton {
             instance.connect().get();
         }
         return instance;
-    }
-
-    public static void connect() throws Exception {
-        getInstance();
-    }
-
-    public static void disconnect() throws Exception {
-        if (instance != null) {
-            instance.disconnect().get();
-            instance = null;
-        }
     }
 }

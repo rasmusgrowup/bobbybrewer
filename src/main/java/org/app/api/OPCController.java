@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = "/api")
 @CrossOrigin(origins = "http://localhost:3000")
-public class OPCController implements IOPCController {
+public class OPCController {
     private final ProductionsService productionsService;
 
     @Autowired
@@ -22,7 +22,6 @@ public class OPCController implements IOPCController {
         this.productionsService = productionsService;
     }
 
-    @Override
     @GetMapping("/read-current-state")
     public Map<String, String> readState() {
         Map<String, String> responseData = new HashMap<>();
@@ -68,7 +67,6 @@ public class OPCController implements IOPCController {
         }
     }
 
-    @Override
     @PostMapping("/set-beer-type")
     public void setBeerType(@RequestBody Map<String, Integer> requestBody) {
         CommandController commandController = new CommandController();
@@ -81,16 +79,13 @@ public class OPCController implements IOPCController {
         commandController.startMaintenance();
     }
 
-    @Override
     public void setAmount(Map<String, Integer> requestBody) {
     }
 
-    @Override
     public void setSpeed(Map<String, Integer> requestBody) {
 
     }
 
-    @Override
     @PostMapping("/start_production")
     public void startProduction(@RequestBody Map<String, Integer> requestBody) throws Exception {
         boolean is_reset = false;
@@ -111,17 +106,9 @@ public class OPCController implements IOPCController {
         productionsService.saveProductionData(beerType, amountCount, machSpeed);
     }
 
-    @Override
     @PostMapping("/stop_production")
     public void cancelProduction() {
         CommandController commandController = new CommandController();
         commandController.cancelProduction();
-    }
-
-    @PostMapping("/start_refill")
-    public void startRefill() {
-        CommandController commandController = new CommandController();
-        //commandController.startRefill();
-        System.out.println("Refill: Great Success!");
     }
 }

@@ -28,5 +28,4 @@ public class StatusCodes {
     public void setDescripiton(String descripiton) {
         this.descripiton = descripiton;
     }
-// Other fields and methods
 }

@@ -7,5 +7,4 @@ import javax.persistence.Id;
 public class Snapshot {
     @Id
     private Long id;
-    // Other fields and methods
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 public class CommandController {
     private SseController sseController;
 
-    public void startProduction() {
+    public void executeProduction() {
         try {
             OpcUaClient client = OpcUaClientSingleton.getInstance();
 

@@ -99,7 +99,7 @@ public class OPCController {
         commandController.setBeerType(requestBody);
         commandController.setAmount(requestBody);
         commandController.setSpeed(requestBody);
-        commandController.startProduction();
+        commandController.executeProduction();
         float beerType = requestBody.get("beerType");
         float amountCount = requestBody.get("amount");
         float machSpeed = requestBody.get("speed");

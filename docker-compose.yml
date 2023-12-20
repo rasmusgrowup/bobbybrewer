@@ -1,22 +1,5 @@
 version: '3.8'
 services:
-    backend:
-        depends_on:
-            wait-for-db:
-                condition: service_completed_successfully
-        build:
-            context: "."
-            dockerfile: Dockerfile
-        image: "backend:latest"
-        ports:
-            -   "8080:8080"
-        environment:
-            - ROBOT=0.0.0.0
-    wait-for-db:
-        image: atkrad/wait4x
-        depends_on:
-            -   mysqldb
-        command: tcp mysqldb:3306 -t 200s -i 10s
     mysqldb:
         image: "mysql:latest"
         restart: always
@@ -27,10 +10,6 @@ services:
             MYSQL_USER: bobbybrewer
             MYSQL_PASSWORD: bobby_pw
             MYSQL_ROOT_PASSWORD: bobby_rpw
-        healthcheck:
-            test: ["CMD","mysqladmin","ping","-h","localhost"]
-            timeout: 20s
-            retries: 10
         volumes:
             - ./src/main/database/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
 
